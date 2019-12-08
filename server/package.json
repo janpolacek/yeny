@@ -1,0 +1,12 @@
+{
+  "name": "yeny-server",
+  "version": "0.1.0",
+  "dependencies": {
+    "type-graphql": "^0.17.5",
+    "typeorm": "^0.2.21",
+    "typescript": "~3.7.2",
+    "apollo-server": "^2.9.13",
+    "typedi": "latest",
+    "typeorm-typedi-extensions": "latest"
+  }
+}
