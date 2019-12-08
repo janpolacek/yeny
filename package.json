@@ -1,0 +1,8 @@
+{
+  "name": "yeny",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  }
+}
