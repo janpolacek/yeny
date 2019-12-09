@@ -1,18 +1,7 @@
-
-import { getRepository} from "typeorm";
-
-import { Event } from "./entities/Event";
+import { getRepository } from 'typeorm';
+import { Event } from './entities/Event';
+import events from './mock/events.json';
 
 export async function seedDatabase() {
-    const eventRepository = getRepository(Event);
-
-    const defaultEvent = eventRepository.create({
-        name: 'Prvy event',
-        date: Date.now()
-    });
-    await eventRepository.save(defaultEvent);
-
-    return {
-        defaultEvent
-    };
+    await getRepository(Event).save(events);
 }

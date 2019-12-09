@@ -1,16 +1,9 @@
-import "reflect-metadata";
-import { ApolloServer } from "apollo-server";
-import { Container } from "typedi";
-import * as TypeORM from "typeorm";
-import * as TypeGraphQL from "type-graphql";
-
-import { EventResolver } from "./resolvers/EventResolver";
-import { Event } from "./entities/Event";
-import { seedDatabase } from "./helpers";
-
-export interface Context {
-    event: Event;
-}
+import 'reflect-metadata';
+import { ApolloServer } from 'apollo-server';
+import { Container } from 'typedi';
+import * as TypeORM from 'typeorm';
+import * as TypeGraphQL from 'type-graphql';
+import { seedDatabase } from './helpers';
 
 TypeORM.useContainer(Container);
 
@@ -18,34 +11,34 @@ async function bootstrap() {
     try {
         // create TypeORM connection
         await TypeORM.createConnection({
-            type: "mysql",
-            database: "type-graphql",
-            username: "root", // fill this with your username
-            password: "qwerty123", // and password
-            port: 3306,
-            host: "localhost",
-            entities: [Event],
-            synchronize: true,
-            logger: "advanced-console",
-            logging: "all",
-            dropSchema: true,
+            type: 'postgres',
+            host: 'localhost',
+            port: 5432,
+            database: 'yeny',
+            username: 'yeny',
+            password: 'qwerty123',
+            entities: [__dirname + '/entities/**/*.ts'],
+            migrations: [__dirname + '/migrations/**/*.ts'],
+            subscribers: [__dirname + '/subscribers/**/*.ts'],
+            logging: ['error', 'warn', 'migration'],
             cache: true,
-        });
+            cli: {
+                entitiesDir: __dirname + '/entities',
+                migrationsDir: __dirname + '/migrations',
+                subscribersDir: __dirname + '/subscribers'
+            },
+            dropSchema: true,
+            synchronize: true
+        }).then(async connection => await connection.runMigrations());
 
         // seed database with some data
-        const { defaultEvent } = await seedDatabase();
-
-        // build TypeGraphQL executable schema
+        await seedDatabase();
         const schema = await TypeGraphQL.buildSchema({
-            resolvers: [EventResolver],
-            container: Container,
+            resolvers: [__dirname + '/resolvers/**/*.ts'],
+            container: Container
         });
 
-        // create mocked context
-        const context: Context = { event: defaultEvent };
-
-        // Create GraphQL server
-        const server = new ApolloServer({ schema, context });
+        const server = new ApolloServer({ schema });
 
         // Start the server
         const { url } = await server.listen(4000);
