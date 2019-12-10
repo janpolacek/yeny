@@ -4,7 +4,7 @@ import { PrimaryGeneratedColumn, Column, Entity, CreateDateColumn, UpdateDateCol
 @ObjectType()
 @Entity()
 export class Location {
-    @Field(_type => ID)
+    @Field(type => ID)
     @PrimaryGeneratedColumn()
     readonly id: number;
 

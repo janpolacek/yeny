@@ -6,14 +6,16 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     OneToOne,
-    JoinColumn
+    JoinColumn,
+    ManyToOne
 } from 'typeorm';
 import { Location } from './Location';
+import { User } from './User';
 
 @ObjectType()
 @Entity()
 export class Event {
-    @Field(_type => ID)
+    @Field(type => ID)
     @PrimaryGeneratedColumn()
     readonly id: number;
 
@@ -26,7 +28,7 @@ export class Event {
     description: string;
 
     @Field()
-    @OneToOne(_type => Location, { eager: true, cascade: true, nullable: true })
+    @OneToOne(type => Location, { eager: true, cascade: true, nullable: true })
     @JoinColumn()
     location?: Location;
 
@@ -37,6 +39,20 @@ export class Event {
     @Field()
     @Column()
     date_to: Date;
+
+    @Field()
+    @Column()
+    image: string;
+
+    @Field(type => User)
+    @ManyToOne(
+        type => User,
+        user => user.events,
+        { nullable: true }
+    )
+    organizer: User;
+    @Column({ nullable: true })
+    organizerId: number;
 
     @CreateDateColumn()
     readonly date_created: Date;
