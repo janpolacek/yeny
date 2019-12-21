@@ -4,6 +4,7 @@ import { Container } from 'typedi';
 import * as TypeORM from 'typeorm';
 import * as TypeGraphQL from 'type-graphql';
 import { seedDatabase } from './helpers';
+import dbConfig from '../ormconfig.json';
 
 TypeORM.useContainer(Container);
 
@@ -11,17 +12,12 @@ async function bootstrap() {
     try {
         // create TypeORM connection
         await TypeORM.createConnection({
+            ...dbConfig,
             type: 'postgres',
-            host: 'localhost',
-            port: 5432,
-            database: 'yeny',
-            username: 'yeny',
-            password: 'qwerty123',
             entities: [__dirname + '/entities/**/*.ts'],
             migrations: [__dirname + '/migrations/**/*.ts'],
             subscribers: [__dirname + '/subscribers/**/*.ts'],
-            logging: ['error', 'warn', 'migration'],
-            cache: true,
+            logging: true,
             cli: {
                 entitiesDir: __dirname + '/entities',
                 migrationsDir: __dirname + '/migrations',

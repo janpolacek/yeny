@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Field, ID, ObjectType, Root } from 'type-graphql';
 import {
     PrimaryGeneratedColumn,
     Column,
@@ -7,15 +7,16 @@ import {
     UpdateDateColumn,
     OneToOne,
     JoinColumn,
-    ManyToOne
+    ManyToOne,
+    BaseEntity
 } from 'typeorm';
 import { Location } from './Location';
 import { User } from './User';
 
 @ObjectType()
 @Entity()
-export class Event {
-    @Field(type => ID)
+export class Event extends BaseEntity {
+    @Field(() => ID)
     @PrimaryGeneratedColumn()
     readonly id: number;
 
@@ -27,8 +28,8 @@ export class Event {
     @Column()
     description: string;
 
-    @Field()
-    @OneToOne(type => Location, { eager: true, cascade: true, nullable: true })
+    @Field(() => Location, { nullable: true })
+    @OneToOne(() => Location, { eager: true, cascade: true, nullable: true })
     @JoinColumn()
     location?: Location;
 
@@ -44,15 +45,13 @@ export class Event {
     @Column()
     image: string;
 
-    @Field(type => User)
+    @Field(() => User)
     @ManyToOne(
-        type => User,
+        () => User,
         user => user.events,
-        { nullable: true }
+        { eager: true }
     )
     organizer: User;
-    @Column({ nullable: true })
-    organizerId: number;
 
     @CreateDateColumn()
     readonly date_created: Date;

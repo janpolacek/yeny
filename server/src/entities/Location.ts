@@ -1,10 +1,10 @@
 import { Field, ID, ObjectType } from 'type-graphql';
-import { PrimaryGeneratedColumn, Column, Entity, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Location {
-    @Field(type => ID)
+export class Location extends BaseEntity {
+    @Field(() => ID)
     @PrimaryGeneratedColumn()
     readonly id: number;
 

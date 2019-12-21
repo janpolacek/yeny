@@ -1,11 +1,11 @@
 import { Field, ID, ObjectType } from 'type-graphql';
-import { PrimaryGeneratedColumn, Entity, OneToMany, Column } from 'typeorm';
+import { PrimaryGeneratedColumn, Entity, OneToMany, Column, BaseEntity } from 'typeorm';
 import { Event } from './Event';
 
 @ObjectType()
 @Entity()
-export class User {
-    @Field(type => ID)
+export class User extends BaseEntity {
+    @Field(() => ID)
     @PrimaryGeneratedColumn()
     readonly id: number;
 
@@ -21,7 +21,7 @@ export class User {
     @Column()
     surname: string;
 
-    @Field(type => [Event])
+    @Field(() => [Event])
     @OneToMany(
         type => Event,
         event => event.organizer,
