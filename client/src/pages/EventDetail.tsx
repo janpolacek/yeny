@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import { GetEventDetail, GetEventDetail_eventById, GetEventDetailVariables } from '../generated/GetEventDetail';
+import { GetEventDetail, GetEventDetailVariables } from '../generated/GetEventDetail';
 
 const GET_EVENTS_DETAIL = gql`
     query GetEventDetail($id: Int!) {

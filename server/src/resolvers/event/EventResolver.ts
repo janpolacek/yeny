@@ -20,7 +20,7 @@ export class EventResolver {
             .createQueryBuilder()
             .skip(skip)
             .take(take)
-            .orderBy('dateTo', 'ASC')
+            .orderBy('Event.dateTo', 'ASC')
             .getMany();
     }
 
@@ -51,7 +51,7 @@ export class EventResolver {
 
     @Mutation(() => Boolean)
     async deleteEvent(@Arg('data') { id, password }: DeleteIventInput) {
-        const event = await this.eventRepository.findOneOrFail({ where: { id }, cache: 1000 });
+        const event = await this.eventRepository.findOneOrFail({ where: { id } });
 
         // TODO: hash compare
         if (event.password === password) {
