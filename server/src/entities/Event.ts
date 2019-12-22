@@ -45,6 +45,9 @@ export class Event extends BaseEntity {
     @Column()
     image: string;
 
+    @Column()
+    password: string;
+
     @Field(() => User)
     @ManyToOne(
         () => User,

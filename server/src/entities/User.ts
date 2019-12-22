@@ -11,15 +11,19 @@ export class User extends BaseEntity {
 
     @Field()
     @Column()
-    email: string;
-
-    @Field()
-    @Column()
     name: string;
 
     @Field()
     @Column()
     surname: string;
+
+    @Field()
+    @Column()
+    phone: string;
+
+    @Field()
+    @Column()
+    email: string;
 
     @Field(() => [Event])
     @OneToMany(

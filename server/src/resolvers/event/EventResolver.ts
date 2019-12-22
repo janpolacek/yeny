@@ -1,6 +1,6 @@
 import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql';
 import { Event } from '../../entities/Event';
-import { EventInput } from './EventInput';
+import { CreateEventInput, DeleteIventInput } from './EventInput';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
 import { User } from '../../entities/User';
@@ -15,18 +15,22 @@ export class EventResolver {
     ) {}
 
     @Query(() => Event, { nullable: true })
-    async eventById(@Arg('eventId', () => Int, { nullable: false }) eventId: Event['id']) {
-        return await Event.findOne({ where: { id: eventId }, cache: 1000 });
+    async eventById(@Arg('id', () => Int, { nullable: false }) id: Event['id']) {
+        return await this.eventRepository.findOne({ where: { id }, cache: 1000 });
     }
 
     @Mutation(() => Event)
-    async createEvent(@Arg('data') { location, date_from, description, image, title, date_to }: EventInput) {
+    async createEvent(
+        @Arg('data') { location, date_from, description, image, title, date_to, password }: CreateEventInput
+    ) {
+        // TODO: hash password
         return await this.eventRepository.save({
             title,
             description,
             date_from,
             date_to,
             image,
+            password,
             location: {
                 latitude: location.latitude,
                 longitude: location.longitude,
@@ -36,8 +40,14 @@ export class EventResolver {
     }
 
     @Mutation(() => Boolean)
-    async deleteEvent(@Arg('eventId', () => Int, { nullable: false }) eventId: Event['id']) {
-        const deleteResult = await this.eventRepository.delete(eventId);
-        return (deleteResult.affected ?? 0) > 0;
+    async deleteEvent(@Arg('data') { id, password }: DeleteIventInput) {
+        const event = await this.eventRepository.findOneOrFail({ where: { id }, cache: 1000 });
+
+        // TODO: hash compare
+        if (event.password === password) {
+            await this.eventRepository.delete(event);
+            return true;
+        }
+        return false;
     }
 }
