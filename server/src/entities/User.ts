@@ -28,8 +28,7 @@ export class User extends BaseEntity {
     @Field(() => [Event])
     @OneToMany(
         type => Event,
-        event => event.organizer,
-        { cascade: true }
+        event => event.organizer
     )
     events: Event[];
 }

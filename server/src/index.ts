@@ -34,7 +34,7 @@ async function bootstrap() {
             container: Container
         });
 
-        const server = new ApolloServer({ schema });
+        const server = new ApolloServer({ schema, cors: true });
 
         // Start the server
         const { url } = await server.listen(4000);

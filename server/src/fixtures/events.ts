@@ -6,8 +6,8 @@ export default [
         title: 'My past event',
         description: 'Description of my first event',
         password: 'password',
-        date_from: '2019-12-06T20:02:35.824Z',
-        date_to: '2019-12-08T20:02:35.824Z',
+        dateFrom: '2019-12-06T20:02:35.824Z',
+        dateTo: '2019-12-08T20:02:35.824Z',
         image: 'https://wapo.st/2P65TfP',
         organizer: organizer1,
         location: {
@@ -20,8 +20,8 @@ export default [
         title: 'My first event',
         description: 'Description of my first event',
         password: 'password',
-        date_from: '2019-12-09T20:02:35.824Z',
-        date_to: '2019-12-10T20:02:35.824Z',
+        dateFrom: '2019-12-09T20:02:35.824Z',
+        dateTo: '2019-12-10T20:02:35.824Z',
         image: 'https://wapo.st/2P65TfP',
         organizer: organizer1,
         location: {
@@ -34,8 +34,8 @@ export default [
         title: 'My second event',
         description: 'Description of my second event',
         password: 'password',
-        date_from: '2019-12-08T20:02:35.824Z',
-        date_to: '2019-12-12T20:02:35.824Z',
+        dateFrom: '2019-12-08T20:02:35.824Z',
+        dateTo: '2019-12-12T20:02:35.824Z',
         image: 'https://wapo.st/2P65TfP',
         organizer: organizer2
     },
@@ -43,8 +43,8 @@ export default [
         title: 'My third event',
         description: 'Description of my third event',
         password: 'password',
-        date_from: '2009-12-08T20:02:35.824Z',
-        date_to: '2029-12-12T20:02:35.824Z',
+        dateFrom: '2009-12-08T20:02:35.824Z',
+        dateTo: '2029-12-12T20:02:35.824Z',
         image: 'https://wapo.st/2P65TfP',
         organizer: organizer2,
         location: {

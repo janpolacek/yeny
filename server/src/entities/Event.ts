@@ -35,11 +35,11 @@ export class Event extends BaseEntity {
 
     @Field()
     @Column()
-    date_from: Date;
+    dateFrom: Date;
 
     @Field()
     @Column()
-    date_to: Date;
+    dateTo: Date;
 
     @Field()
     @Column()
@@ -52,7 +52,7 @@ export class Event extends BaseEntity {
     @ManyToOne(
         () => User,
         user => user.events,
-        { eager: true }
+        { eager: true, cascade: true }
     )
     organizer: User;
 

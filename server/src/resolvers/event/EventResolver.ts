@@ -1,6 +1,6 @@
-import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Args, Int, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Event } from '../../entities/Event';
-import { CreateEventInput, DeleteIventInput } from './EventInput';
+import { CreateEventInput, DeleteIventInput, GetEventsArgs } from './EventInput';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
 import { User } from '../../entities/User';
@@ -14,21 +14,31 @@ export class EventResolver {
         private readonly userRepository: Repository<User>
     ) {}
 
-    @Query(() => Event, { nullable: true })
+    @Query(returns => [Event], { nullable: true })
+    async events(@Root() @Args() { skip, take }: GetEventsArgs) {
+        return this.eventRepository
+            .createQueryBuilder()
+            .skip(skip)
+            .take(take)
+            .orderBy('dateTo', 'ASC')
+            .getMany();
+    }
+
+    @Query(() => Event)
     async eventById(@Arg('id', () => Int, { nullable: false }) id: Event['id']) {
         return await this.eventRepository.findOne({ where: { id }, cache: 1000 });
     }
 
     @Mutation(() => Event)
     async createEvent(
-        @Arg('data') { location, date_from, description, image, title, date_to, password }: CreateEventInput
+        @Arg('data') { location, dateFrom, description, image, title, dateTo, password }: CreateEventInput
     ) {
         // TODO: hash password
         return await this.eventRepository.save({
             title,
             description,
-            date_from,
-            date_to,
+            dateFrom,
+            dateTo,
             image,
             password,
             location: {

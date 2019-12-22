@@ -1,7 +1,16 @@
-import { Field, InputType } from 'type-graphql';
+import { ArgsType, Field, InputType, Int } from 'type-graphql';
 import { MaxLength, MinLength } from 'class-validator';
 import { LocationInput } from './LocationInput';
 import { OrganizerInput } from './OrganizerInput';
+
+@ArgsType()
+export class GetEventsArgs {
+    @Field(_type => Int, { nullable: true, defaultValue: 0 })
+    skip?: number;
+
+    @Field(_type => Int, { nullable: true, defaultValue: 20 })
+    take?: number;
+}
 
 @InputType()
 export class CreateEventInput {
@@ -20,10 +29,10 @@ export class CreateEventInput {
     organizer: OrganizerInput;
 
     @Field()
-    date_from: Date;
+    dateFrom: Date;
 
     @Field()
-    date_to: Date;
+    dateTo: Date;
 
     @Field()
     image: string;
