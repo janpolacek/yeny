@@ -11,14 +11,17 @@ import {
     BaseEntity
 } from 'typeorm';
 import { Location } from './Location';
-import { User } from './User';
+import { Organizer } from './Organizer';
 
 @ObjectType()
 @Entity()
 export class Event extends BaseEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn()
     readonly id: number;
+
+    @Field()
+    @Column()
+    url: string;
 
     @Field()
     @Column()
@@ -48,17 +51,27 @@ export class Event extends BaseEntity {
     @Column()
     password: string;
 
-    @Field(() => User)
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    price: number;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    category: string;
+
+    @Field(() => Organizer)
     @ManyToOne(
-        () => User,
-        user => user.events,
+        () => Organizer,
+        organizer => organizer.events,
         { eager: true, cascade: true }
     )
-    organizer: User;
+    organizer: Organizer;
+    @Column()
+    organizerId: number;
 
     @CreateDateColumn()
-    readonly date_created: Date;
+    readonly dateCreated: Date;
 
     @UpdateDateColumn()
-    readonly date_updated: Date;
+    readonly dateUpdated: Date;
 }

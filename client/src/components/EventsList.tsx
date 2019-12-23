@@ -1,49 +1,42 @@
 import React from 'react';
-import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { GetEvents, GetEvents_events, GetEventsVariables } from '../generated/GetEvents';
-
-const GET_EVENTS = gql`
-    query GetEvents($take: Int) {
-        events(take: $take) {
-            id
-            title
-            description
-            image
-            dateFrom
-            dateTo
-        }
-    }
-`;
+import { GET_EVENTS } from '../queries/GetEvents';
+import { useHistory } from 'react-router-dom';
 
 export const EventsList = () => {
     const { loading, error, data } = useQuery<GetEvents, GetEventsVariables>(GET_EVENTS, { variables: {} });
-    if (loading) {
-        return <div>LOADING</div>;
-    }
 
     if (error) {
         return <div>ERROR</div>;
     }
 
-    if (!data?.events?.length) {
-        return <div>EMPTY</div>;
+    if (loading || !data) {
+        return <div>LOADING</div>;
     }
+
     return (
         <>
-            {data.events.map(event => (
-                <EventItem event={event} key={event.id} />
+            {data.events?.map(event => (
+                <EventItem event={event} key={event.url} />
             ))}
         </>
     );
 };
 
-const EventItem = ({ event }: { event: GetEvents_events }) => (
-    <div>
-        <h4>{event.title}</h4>
-        <p>{event.description}</p>
-        <img src={event.image} alt={event.title} />
-        <span>{event.dateFrom}</span>
-        <span>{event.dateTo}</span>
-    </div>
-);
+const EventItem = ({ event }: { event: GetEvents_events }) => {
+    const history = useHistory();
+
+    const handleClick = () => {
+        history.push(`/event/${event.url}`);
+    };
+    return (
+        <div onClick={handleClick}>
+            <h4>{event.title}</h4>
+            <p>{event.description}</p>
+            <img src={event.image} alt={event.title} />
+            <span>{event.dateFrom}</span>
+            <span>{event.dateTo}</span>
+        </div>
+    );
+};

@@ -38,6 +38,12 @@ export class CreateEventInput {
     image: string;
 
     @Field()
+    price: number;
+
+    @Field()
+    category: string;
+
+    @Field()
     @MinLength(6)
     @MaxLength(20)
     password: string;

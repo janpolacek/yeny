@@ -15,14 +15,16 @@
         "ts-node": "^8.5.4",
         "type-graphql": "^0.17.6",
         "typedi": "^0.8.0",
-        "typeorm": "^0.2.21",
+        "typeorm": "^0.2.22",
         "typeorm-typedi-extensions": "^0.2.3",
-        "typescript": "^3.7.4"
+        "typescript": "^3.7.4",
+        "uuid": "latest"
     },
     "engines": {
         "node": "12.x"
     },
     "devDependencies": {
+        "@types/uuid": "^3.4.6",
         "ts-node-dev": "1.0.0-pre.44"
     }
 }

@@ -13,10 +13,7 @@ const App = () => {
                 <main className="App">
                     <header className="App-header">Common Header</header>
                     <Switch>
-                        <Route
-                            path={'/event/:eventId'}
-                            children={props => <EventDetail eventId={Number(props.match?.params.eventId)} />}
-                        />
+                        <Route path={'/event/:url'} children={props => <EventDetail url={props.match?.params.url} />} />
                         <Route children={() => <Homepage />} />
                     </Switch>
                 </main>

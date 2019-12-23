@@ -6,37 +6,37 @@
 // GraphQL query operation: GetEventDetail
 // ====================================================
 
-export interface GetEventDetail_eventById_location {
+export interface GetEventDetail_eventByUrl_location {
     __typename: 'Location';
-    longitude: string;
-    latitude: string;
-    name: string;
+    longitude: string | null;
+    latitude: string | null;
+    name: string | null;
 }
 
-export interface GetEventDetail_eventById_organizer {
-    __typename: 'User';
+export interface GetEventDetail_eventByUrl_organizer {
+    __typename: 'Organizer';
     name: string;
     surname: string;
     phone: string;
     email: string;
 }
 
-export interface GetEventDetail_eventById {
+export interface GetEventDetail_eventByUrl {
     __typename: 'Event';
-    id: string;
     title: string;
+    url: string;
     description: string;
-    location: GetEventDetail_eventById_location | null;
+    location: GetEventDetail_eventByUrl_location | null;
     dateFrom: any;
     dateTo: any;
-    organizer: GetEventDetail_eventById_organizer;
+    organizer: GetEventDetail_eventByUrl_organizer;
     image: string;
 }
 
 export interface GetEventDetail {
-    eventById: GetEventDetail_eventById;
+    eventByUrl: GetEventDetail_eventByUrl;
 }
 
 export interface GetEventDetailVariables {
-    id: number;
+    url: string;
 }

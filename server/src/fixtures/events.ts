@@ -4,6 +4,7 @@ import organizer2 from './organizer2';
 export default [
     {
         title: 'My past event',
+        url: 'past-event',
         description: 'Description of my first event',
         password: 'password',
         dateFrom: '2019-12-06T20:02:35.824Z',
@@ -18,6 +19,8 @@ export default [
     },
     {
         title: 'My first event',
+        url: 'first-event',
+
         description: 'Description of my first event',
         password: 'password',
         dateFrom: '2019-12-09T20:02:35.824Z',
@@ -32,6 +35,7 @@ export default [
     },
     {
         title: 'My second event',
+        url: 'second-event',
         description: 'Description of my second event',
         password: 'password',
         dateFrom: '2019-12-08T20:02:35.824Z',
@@ -41,6 +45,7 @@ export default [
     },
     {
         title: 'My third event',
+        url: 'third-event',
         description: 'Description of my third event',
         password: 'password',
         dateFrom: '2009-12-08T20:02:35.824Z',

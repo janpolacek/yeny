@@ -8,8 +8,8 @@
 
 export interface GetEvents_events {
     __typename: 'Event';
-    id: string;
     title: string;
+    url: string;
     description: string;
     image: string;
     dateFrom: any;

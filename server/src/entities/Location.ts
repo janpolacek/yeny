@@ -4,25 +4,24 @@ import { PrimaryGeneratedColumn, Column, Entity, CreateDateColumn, UpdateDateCol
 @ObjectType()
 @Entity()
 export class Location extends BaseEntity {
-    @Field(() => ID)
     @PrimaryGeneratedColumn()
     readonly id: number;
 
-    @Field()
+    @Field({ nullable: true })
     @Column({ nullable: true })
     longitude?: string;
 
-    @Field()
+    @Field({ nullable: true })
     @Column({ nullable: true })
     latitude?: string;
 
-    @Field()
+    @Field({ nullable: true })
     @Column({ nullable: true })
     name?: string;
 
     @CreateDateColumn()
-    readonly date_created: Date;
+    readonly dateCreated: Date;
 
     @UpdateDateColumn()
-    readonly date_updated: Date;
+    readonly dateUpdated: Date;
 }
