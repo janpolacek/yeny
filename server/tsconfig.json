@@ -18,7 +18,6 @@
         "strictPropertyInitialization": false,
         "resolveJsonModule": true,
         "lib": ["es2017", "esnext.asynciterable"],
-        "types": ["node"],
         "baseUrl": ".",
         "paths": {
             "*": ["types/*"]

@@ -1,9 +1,10 @@
 import React from 'react';
-import { EventsList } from '../components/EventsList';
+import { EventsList } from '../components/events/EventsList';
 
-export const Homepage = () => (
-    <div>
-        <h2>HOMEPAGE</h2>
-        <EventsList />
-    </div>
-);
+export const Homepage = () => {
+    return (
+        <>
+            <EventsList />
+        </>
+    );
+};

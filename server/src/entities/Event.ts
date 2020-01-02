@@ -35,6 +35,8 @@ export class Event extends BaseEntity {
     @OneToOne(() => Location, { eager: true, cascade: true, nullable: true })
     @JoinColumn()
     location?: Location;
+    @Column({ nullable: true })
+    locationId: number;
 
     @Field()
     @Column()

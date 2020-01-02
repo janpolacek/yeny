@@ -1,21 +1,37 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import client from './client';
-import './App.css';
+import apolloClient from './apolloClient';
 import { Homepage } from './pages/Homepage';
 import { EventDetail } from './pages/EventDetail';
+import { Header } from './components/Header';
+import { CssBaseline, makeStyles } from '@material-ui/core';
+import { PageContainer } from './components/PageContainer';
+
+const useStyles = makeStyles(theme => ({
+    app: {
+        background: theme.palette.common.white,
+        minHeight: 'calc(100vh - 64px)'
+    }
+}));
 
 const App = () => {
+    const classes = useStyles();
     return (
-        <ApolloProvider client={client}>
+        <ApolloProvider client={apolloClient}>
+            <CssBaseline />
             <Router>
-                <main className="App">
-                    <header className="App-header">Common Header</header>
-                    <Switch>
-                        <Route path={'/event/:url'} children={props => <EventDetail url={props.match?.params.url} />} />
-                        <Route children={() => <Homepage />} />
-                    </Switch>
+                <main className={classes.app}>
+                    <Header />
+                    <PageContainer>
+                        <Switch>
+                            <Route
+                                path={'/event/:url'}
+                                children={props => <EventDetail url={props.match?.params.url} />}
+                            />
+                            <Route children={() => <Homepage />} />
+                        </Switch>
+                    </PageContainer>
                 </main>
             </Router>
         </ApolloProvider>

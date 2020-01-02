@@ -5,6 +5,7 @@ import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
 import uuid from 'uuid/v4';
 import { Organizer } from '../../entities/Organizer';
+import { Location } from '../../entities/Location';
 
 @Resolver()
 export class EventResolver {
@@ -12,20 +13,24 @@ export class EventResolver {
         @InjectRepository(Event)
         private readonly eventRepository: Repository<Event>,
         @InjectRepository(Organizer)
-        private readonly organizerRepository: Repository<Organizer>
+        private readonly organizerRepository: Repository<Organizer>,
+        @InjectRepository(Location)
+        private readonly locationRepository: Repository<Location>
     ) {}
 
     @Query(returns => [Event], { nullable: true })
     async events(@Root() @Args() { skip, take }: GetEventsArgs) {
         const events = await this.eventRepository
             .createQueryBuilder('Event')
-            .orderBy('Event.dateTo', 'ASC')
+            .where('Event.dateTo >= :now', { now: new Date() })
+            .orderBy('Event.dateFrom', 'ASC')
             .skip(skip)
             .take(take)
             .getMany();
 
         return events.map(async event => {
             event.organizer = await this.organizerRepository.findOneOrFail({ where: { id: event.organizerId } });
+            event.location = await this.locationRepository.findOne({ where: { id: event.locationId } });
             return event;
         });
     }
@@ -35,7 +40,7 @@ export class EventResolver {
         return await this.eventRepository.findOne({ where: { id }, cache: 1000 });
     }
 
-    @Query(() => Event)
+    @Query(() => Event, { nullable: true })
     async eventByUrl(@Arg('url', () => String, { nullable: false }) url: Event['url']) {
         return await this.eventRepository.findOne({ where: { url }, cache: 1000 });
     }
@@ -47,7 +52,7 @@ export class EventResolver {
         const url = title + uuid().slice(0, 10);
         // TODO: hash password
         return await this.eventRepository.save({
-            title,
+            title: title,
             url,
             description,
             dateFrom,

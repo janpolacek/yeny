@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server';
 import { Container } from 'typedi';
 import * as TypeORM from 'typeorm';
 import * as TypeGraphQL from 'type-graphql';
-import { seedDatabase } from './helpers';
+import { seedDatabase } from './seedDatabase';
 import dbConfig from '../ormconfig.json';
 
 TypeORM.useContainer(Container);
