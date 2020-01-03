@@ -36,16 +36,16 @@ export const EventsList = () => {
 
 const EventsListLoader = () => {
     const classes = useStyles();
-
+    let skeleton = [];
+    for (let i = 0; i < 6; i++) {
+        skeleton.push(<EventItemSkeleton />);
+    }
     return (
         <>
             <Typography variant={'h5'} className={`${classes.header}`}>
                 Loading your events ...
             </Typography>
-            <EventItemSkeleton />
-            <EventItemSkeleton />
-            <EventItemSkeleton />
-            <EventItemSkeleton />
+            {skeleton}
         </>
     );
 };

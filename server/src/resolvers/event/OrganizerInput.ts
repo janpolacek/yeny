@@ -6,11 +6,5 @@ export class OrganizerInput {
     name: string;
 
     @Field()
-    surname: string;
-
-    @Field()
-    phone: string;
-
-    @Field()
     email: string;
 }

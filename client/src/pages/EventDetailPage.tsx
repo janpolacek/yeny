@@ -5,7 +5,7 @@ import { GET_EVENT_DETAIL_BY_URL } from '../queries/GetEventDetail';
 import { Typography } from '@material-ui/core';
 import { formatDate } from '../utils';
 
-export const EventDetail: React.FC<{ url: string }> = ({ url }) => {
+export const EventDetailPage: React.FC<{ url: string }> = ({ url }) => {
     const { data, loading, error } = useQuery<GetEventDetail, GetEventDetailVariables>(GET_EVENT_DETAIL_BY_URL, {
         variables: { url: url }
     });
@@ -23,13 +23,13 @@ export const EventDetail: React.FC<{ url: string }> = ({ url }) => {
     }
 
     return (
-        <main>
+        <>
             <Typography component={'h2'}>{data.eventByUrl.title}</Typography>
             <Typography variant={'body1'}>{data.eventByUrl.description}</Typography>
             <Typography variant={'body1'}>
                 {formatDate(data?.eventByUrl.dateFrom)} - {formatDate(data?.eventByUrl.dateTo)}
             </Typography>
             <img src={data.eventByUrl.image} alt={data.eventByUrl.title} />
-        </main>
+        </>
     );
 };

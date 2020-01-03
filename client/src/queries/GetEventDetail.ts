@@ -14,8 +14,6 @@ export const GET_EVENT_DETAIL_BY_URL = gql`
             dateTo
             organizer {
                 name
-                surname
-                phone
                 email
             }
             image

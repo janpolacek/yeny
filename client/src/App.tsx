@@ -2,11 +2,12 @@ import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import apolloClient from './apolloClient';
-import { Homepage } from './pages/Homepage';
-import { EventDetail } from './pages/EventDetail';
+import { HomePage } from './pages/HomePage';
+import { EventDetailPage } from './pages/EventDetailPage';
 import { Header } from './components/Header';
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import { PageContainer } from './components/PageContainer';
+import { CreateEventPage } from './pages/CreateEventPage';
 
 const useStyles = makeStyles(theme => ({
     app: {
@@ -25,11 +26,12 @@ const App = () => {
                     <Header />
                     <PageContainer>
                         <Switch>
+                            <Route path={'/create-event'} children={() => <CreateEventPage />} />
                             <Route
                                 path={'/event/:url'}
-                                children={props => <EventDetail url={props.match?.params.url} />}
+                                children={props => <EventDetailPage url={props.match?.params.url} />}
                             />
-                            <Route children={() => <Homepage />} />
+                            <Route children={() => <HomePage />} />
                         </Switch>
                     </PageContainer>
                 </main>

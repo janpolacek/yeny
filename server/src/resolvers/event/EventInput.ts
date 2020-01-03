@@ -22,9 +22,6 @@ export class CreateEventInput {
     @MaxLength(1000)
     description: string;
 
-    @Field(() => LocationInput, { nullable: true })
-    location: LocationInput;
-
     @Field(() => OrganizerInput)
     organizer: OrganizerInput;
 
@@ -37,11 +34,14 @@ export class CreateEventInput {
     @Field()
     image: string;
 
-    @Field()
+    @Field({ nullable: true })
     price: number;
 
-    @Field()
+    @Field({ nullable: true })
     category: string;
+
+    @Field(() => LocationInput, { nullable: true })
+    location: LocationInput;
 
     @Field()
     @MinLength(6)

@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType, Root } from 'type-graphql';
+import { Field, ObjectType } from 'type-graphql';
 import {
     PrimaryGeneratedColumn,
     Column,
@@ -50,7 +50,7 @@ export class Event extends BaseEntity {
     @Column()
     image: string;
 
-    @Column()
+    @Column({ nullable: true })
     password: string;
 
     @Field({ nullable: true })
@@ -70,6 +70,9 @@ export class Event extends BaseEntity {
     organizer: Organizer;
     @Column()
     organizerId: number;
+
+    @Column({ default: false })
+    published: boolean;
 
     @CreateDateColumn()
     readonly dateCreated: Date;

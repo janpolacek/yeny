@@ -15,14 +15,6 @@ export class Organizer extends BaseEntity {
 
     @Field()
     @Column()
-    surname: string;
-
-    @Field()
-    @Column()
-    phone: string;
-
-    @Field()
-    @Column()
     email: string;
 
     @OneToMany(

@@ -7,10 +7,8 @@ import { addDays } from 'date-fns';
 
 function fakeOrganizer(): Partial<Organizer> {
     return {
-        name: faker.name.firstName(),
-        surname: faker.name.lastName(),
-        email: faker.internet.email(),
-        phone: faker.phone.phoneNumber()
+        name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+        email: faker.internet.email()
     };
 }
 
@@ -33,7 +31,8 @@ function fakeEvent(fakeOrganizer: Partial<Organizer>) {
             longitude: faker.address.longitude(),
             latitude: faker.address.latitude(),
             name: faker.address.city()
-        }
+        },
+        published: true
     };
 }
 

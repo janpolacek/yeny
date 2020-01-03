@@ -23,11 +23,13 @@ export class EventResolver {
         const events = await this.eventRepository
             .createQueryBuilder('Event')
             .where('Event.dateTo >= :now', { now: new Date() })
+            .where('Event.published = true')
             .orderBy('Event.dateFrom', 'ASC')
             .skip(skip)
             .take(take)
             .getMany();
 
+        // todo: join
         return events.map(async event => {
             event.organizer = await this.organizerRepository.findOneOrFail({ where: { id: event.organizerId } });
             event.location = await this.locationRepository.findOne({ where: { id: event.locationId } });
@@ -35,14 +37,9 @@ export class EventResolver {
         });
     }
 
-    @Query(() => Event)
-    async eventById(@Arg('id', () => Int, { nullable: false }) id: Event['id']) {
-        return await this.eventRepository.findOne({ where: { id }, cache: 1000 });
-    }
-
     @Query(() => Event, { nullable: true })
     async eventByUrl(@Arg('url', () => String, { nullable: false }) url: Event['url']) {
-        return await this.eventRepository.findOne({ where: { url }, cache: 1000 });
+        return await this.eventRepository.findOne({ where: { url, published: true }, cache: 1000 });
     }
 
     @Mutation(() => Event)
@@ -50,7 +47,6 @@ export class EventResolver {
         @Arg('data') { location, dateFrom, description, image, title, dateTo, password }: CreateEventInput
     ) {
         const url = title + uuid().slice(0, 10);
-        // TODO: hash password
         return await this.eventRepository.save({
             title: title,
             url,
@@ -58,7 +54,6 @@ export class EventResolver {
             dateFrom,
             dateTo,
             image,
-            password,
             location: {
                 latitude: location.latitude,
                 longitude: location.longitude,

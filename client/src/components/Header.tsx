@@ -28,7 +28,6 @@ const useStyles = makeStyles(theme => ({
     },
     search: {
         position: 'relative',
-        borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25)
@@ -72,22 +71,26 @@ export const Header = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    const handleClick = () => {
+    const handleLogoClick = () => {
         history.push(`/`);
+    };
+
+    const handleCreateEventClick = () => {
+        history.push(`/create-event`);
     };
 
     return (
         <AppBar position="static" elevation={0} className={classes.root}>
             <Toolbar>
                 <Link className={classes.logo}>
-                    <Logo className={classes.logoIcon} onClick={handleClick} />
+                    <Logo className={classes.logoIcon} onClick={handleLogoClick} />
                 </Link>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
                         <SearchIcon />
                     </div>
                     <InputBase
-                        placeholder="Search…"
+                        placeholder="Search ..."
                         classes={{
                             root: classes.inputRoot,
                             input: classes.inputInput
@@ -95,8 +98,8 @@ export const Header = () => {
                         inputProps={{ 'aria-label': 'search' }}
                     />
                 </div>
-                <Button color="inherit" className={classes.addNewButton}>
-                    Add new event
+                <Button color="inherit" className={classes.addNewButton} onClick={handleCreateEventClick}>
+                    Create Event
                 </Button>
             </Toolbar>
         </AppBar>

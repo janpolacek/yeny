@@ -1,9 +1,9 @@
-import { Card, CardContent, CardMedia, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Card, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core';
 import * as colors from '@material-ui/core/colors';
 import { GetEvents_events } from '../../generated/GetEvents';
 import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
-import { formatDate, formatPrice } from '../../utils';
+import { formatDate } from '../../utils';
 import { Skeleton } from '@material-ui/lab';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
@@ -77,6 +77,7 @@ export const EventItem = ({ event }: { event: GetEvents_events }) => {
                     <Typography variant={'h6'}>
                         <span className={classes.fromDate}>{formatDate(event.dateFrom)}</span>
                         <span className={classes.delimiter}>|</span>
+
                         {event.title}
                     </Typography>
 
@@ -110,7 +111,6 @@ export const EventItemSkeleton = () => {
                     <Skeleton variant={'text'} width={500} height={24} animation={false} />
                     <Skeleton variant={'text'} width={200} height={24} animation={false} />
                     <Skeleton variant={'text'} width={300} height={24} animation={false} />
-                    <Skeleton variant={'text'} width={100} height={24} animation={false} />
                 </CardContent>
             </div>
         </Card>

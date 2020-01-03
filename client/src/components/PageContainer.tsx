@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
 export const PageContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     let classes = useStyles();
     return (
-        <Container component="main" fixed className={classes.container}>
+        <Container component="main" fixed maxWidth="lg" className={classes.container}>
             {children}
         </Container>
     );
