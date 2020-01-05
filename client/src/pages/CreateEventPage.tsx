@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles, Step, StepLabel, Stepper } from '@material-ui/core';
-import { CreateEventForm } from '../components/create/CreateEventForm';
+import { CreateEventForm } from '../components/forms/CreateEventForm';
 
 const useStyles = makeStyles(theme => ({
     stepper: {

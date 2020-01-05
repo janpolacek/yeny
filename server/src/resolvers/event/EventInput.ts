@@ -25,22 +25,22 @@ export class CreateEventInput {
     @Field(() => OrganizerInput)
     organizer: OrganizerInput;
 
-    @Field()
+    @Field(() => Date)
     dateFrom: Date;
 
-    @Field()
+    @Field(() => Date)
     dateTo: Date;
 
-    @Field()
-    image: string;
+    @Field({ nullable: true })
+    image?: string;
 
     @Field({ nullable: true })
-    price: number;
+    price?: number;
 
     @Field({ nullable: true })
-    category: string;
+    category?: string;
 
-    @Field(() => LocationInput, { nullable: true })
+    @Field(() => LocationInput)
     location: LocationInput;
 
     @Field()

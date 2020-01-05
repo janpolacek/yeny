@@ -2,10 +2,14 @@ import { Arg, Args, Int, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Event } from '../../entities/Event';
 import { CreateEventInput, DeleteIventInput, GetEventsArgs } from './EventInput';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import uuid from 'uuid/v4';
 import { Organizer } from '../../entities/Organizer';
 import { Location } from '../../entities/Location';
+import speakingurl from 'speakingurl';
+import { uniqueSpeakingUrl } from '../../utils';
+
+const DEV_ENV = true;
 
 @Resolver()
 export class EventResolver {
@@ -27,6 +31,7 @@ export class EventResolver {
             .orderBy('Event.dateFrom', 'ASC')
             .skip(skip)
             .take(take)
+            .cache('eventsCache', DEV_ENV ? 0 : 2 * 60 * 1000)
             .getMany();
 
         // todo: join
@@ -39,26 +44,31 @@ export class EventResolver {
 
     @Query(() => Event, { nullable: true })
     async eventByUrl(@Arg('url', () => String, { nullable: false }) url: Event['url']) {
-        return await this.eventRepository.findOne({ where: { url, published: true }, cache: 1000 });
+        return await this.eventRepository.findOne({
+            where: { url, published: true },
+            cache: DEV_ENV ? 0 : 10 * 60 * 1000
+        });
     }
 
     @Mutation(() => Event)
     async createEvent(
-        @Arg('data') { location, dateFrom, description, image, title, dateTo, password }: CreateEventInput
+        @Arg('data')
+        { location, organizer, dateFrom, description, image, title, dateTo, password, price }: CreateEventInput
     ) {
-        const url = title + uuid().slice(0, 10);
-        return await this.eventRepository.save({
-            title: title,
+        const url = uniqueSpeakingUrl(title);
+        image = image ? image : undefined;
+        return await getRepository(Event).save({
+            title,
             url,
             description,
             dateFrom,
             dateTo,
             image,
-            location: {
-                latitude: location.latitude,
-                longitude: location.longitude,
-                name: location.name
-            }
+            location,
+            password,
+            organizer,
+            price,
+            published: true
         });
     }
 

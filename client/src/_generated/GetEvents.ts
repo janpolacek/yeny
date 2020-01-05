@@ -22,7 +22,7 @@ export interface GetEvents_events {
     url: string;
     price: number | null;
     description: string;
-    image: string;
+    image: string | null;
     dateFrom: any;
     dateTo: any;
     location: GetEvents_events_location | null;

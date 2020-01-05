@@ -2,9 +2,9 @@ import { getRepository } from 'typeorm';
 import { Event } from './entities/Event';
 import * as faker from 'faker';
 import { Organizer } from './entities/Organizer';
-import speakingurl from 'speakingurl';
+import { uniqueSpeakingUrl } from './utils';
 import { addDays } from 'date-fns';
-
+const DEV_ENV = true;
 function fakeOrganizer(): Partial<Organizer> {
     return {
         name: `${faker.name.firstName()} ${faker.name.lastName()}`,
@@ -19,7 +19,7 @@ function fakeEvent(fakeOrganizer: Partial<Organizer>) {
 
     return {
         title: title,
-        url: speakingurl(title),
+        url: uniqueSpeakingUrl(title),
         description: faker.lorem.paragraph(),
         password: 'password',
         dateFrom: dateFrom,
@@ -32,7 +32,7 @@ function fakeEvent(fakeOrganizer: Partial<Organizer>) {
             latitude: faker.address.latitude(),
             name: faker.address.city()
         },
-        published: true
+        published: DEV_ENV
     };
 }
 

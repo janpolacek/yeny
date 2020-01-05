@@ -2,12 +2,12 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class LocationInput {
-    @Field()
+    @Field({ nullable: true })
     longitude?: string;
 
-    @Field()
+    @Field({ nullable: true })
     latitude?: string;
 
     @Field()
-    name?: string;
+    name: string;
 }

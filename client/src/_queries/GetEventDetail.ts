@@ -1,10 +1,11 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 export const GET_EVENT_DETAIL_BY_URL = gql`
-    query GetEventDetailByUrl($url: String!) {
+    query GetEventDetail($url: String!) {
         eventByUrl(url: $url) {
             title
             description
+            url
             location {
                 longitude
                 latitude
@@ -17,6 +18,8 @@ export const GET_EVENT_DETAIL_BY_URL = gql`
                 email
             }
             image
+
+            price
         }
     }
 `;

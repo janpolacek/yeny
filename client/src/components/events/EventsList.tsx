@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { GetEvents, GetEventsVariables } from '../../generated/GetEvents';
-import { GET_EVENTS } from '../../queries/GetEvents';
+import { GetEvents, GetEventsVariables } from '../../_generated/GetEvents';
+import { GET_EVENTS } from '../../_queries/GetEvents';
 import { EventItem, EventItemSkeleton } from './EventItem';
 import { makeStyles, Typography } from '@material-ui/core';
 import * as colors from '@material-ui/core/colors';
@@ -38,7 +38,7 @@ const EventsListLoader = () => {
     const classes = useStyles();
     let skeleton = [];
     for (let i = 0; i < 6; i++) {
-        skeleton.push(<EventItemSkeleton />);
+        skeleton.push(<EventItemSkeleton key={i} />);
     }
     return (
         <>

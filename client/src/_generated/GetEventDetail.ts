@@ -16,25 +16,24 @@ export interface GetEventDetail_eventByUrl_location {
 export interface GetEventDetail_eventByUrl_organizer {
     __typename: 'Organizer';
     name: string;
-    surname: string;
-    phone: string;
     email: string;
 }
 
 export interface GetEventDetail_eventByUrl {
     __typename: 'Event';
     title: string;
-    url: string;
     description: string;
+    url: string;
     location: GetEventDetail_eventByUrl_location | null;
     dateFrom: any;
     dateTo: any;
     organizer: GetEventDetail_eventByUrl_organizer;
-    image: string;
+    image: string | null;
+    price: number | null;
 }
 
 export interface GetEventDetail {
-    eventByUrl: GetEventDetail_eventByUrl;
+    eventByUrl: GetEventDetail_eventByUrl | null;
 }
 
 export interface GetEventDetailVariables {

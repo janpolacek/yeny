@@ -1,12 +1,12 @@
 import { Card, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core';
 import * as colors from '@material-ui/core/colors';
-import { GetEvents_events } from '../../generated/GetEvents';
+import { GetEvents_events } from '../../_generated/GetEvents';
 import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
 import { formatDate } from '../../utils';
 import { Skeleton } from '@material-ui/lab';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-
+import placeholderWhite from '../../assets/placeholder_white.png';
 const useEventListStyles = makeStyles(theme => ({
     card: {
         display: 'flex',
@@ -62,7 +62,6 @@ export const EventItem = ({ event }: { event: GetEvents_events }) => {
     const handleClick = () => {
         history.push(`/event/${event.url}`);
     };
-
     return (
         <Card
             onClick={handleClick}
@@ -71,7 +70,7 @@ export const EventItem = ({ event }: { event: GetEvents_events }) => {
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
-            <CardMedia className={classes.cover} image={event.image} title={event.title} />
+            <CardMedia className={classes.cover} image={event.image ?? placeholderWhite} title={event.title} />
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography variant={'h6'}>

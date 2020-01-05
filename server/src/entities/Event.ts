@@ -46,16 +46,16 @@ export class Event extends BaseEntity {
     @Column()
     dateTo: Date;
 
-    @Field()
-    @Column()
-    image: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    image?: string;
 
     @Column({ nullable: true })
     password: string;
 
     @Field({ nullable: true })
     @Column({ nullable: true })
-    price: number;
+    price?: number;
 
     @Field({ nullable: true })
     @Column({ nullable: true })

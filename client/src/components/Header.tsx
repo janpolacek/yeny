@@ -1,4 +1,4 @@
-import { AppBar, Button, fade, InputBase, Link, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, fade, InputBase, Link, makeStyles, Toolbar } from '@material-ui/core';
 import * as React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useHistory } from 'react-router-dom';

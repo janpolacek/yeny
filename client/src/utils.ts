@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { useEffect } from 'react';
 
 export const DATE_FORMAT = 'dd.MM.yyyy';
 export const TIME_FORMAT = 'HH:mm';
@@ -19,3 +20,9 @@ export function formatPrice(price: number | null) {
 
     return `${price} €`;
 }
+
+export const useScrollTop = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+};
