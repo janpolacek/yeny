@@ -1,4 +1,4 @@
-export interface ImgurResponse {
+export type ImgurResponse = {
     data: {
         id: string;
         title: string | null;
@@ -31,4 +31,4 @@ export interface ImgurResponse {
     };
     success: boolean;
     status: number;
-}
+};

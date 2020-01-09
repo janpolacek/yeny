@@ -4,6 +4,7 @@ import { useCreateEventFormikContext } from './useCreateEventFormikContext';
 import axios from 'axios';
 import { ImgurResponse } from '../../_types/Imgur';
 import placeholder from '../../assets/placeholder_sample.png';
+import * as colors from '@material-ui/core/colors';
 export const uploadToImgur = async (image: File) => {
     const result = await axios.post<ImgurResponse>('https://api.imgur.com/3/image', image, {
         headers: { Authorization: 'Client-ID f1ab775b582fa27' }
@@ -36,7 +37,8 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         height: '100%',
         objectFit: 'cover',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        border: `1px solid ${colors.grey['300']}`
     }
 }));
 
@@ -71,7 +73,7 @@ export const BannerUpload = () => {
         setFieldValue('image', null);
     };
     return (
-        <Grid item sm={12}>
+        <Grid item xs={12}>
             <div className={classes.container}>
                 <input
                     id={'image_input'}

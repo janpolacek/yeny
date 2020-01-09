@@ -1,4 +1,4 @@
-export interface NominatimPlace {
+export type NominatimPlace = {
     place_id: number;
     licence: string;
     osm_type: string;
@@ -11,6 +11,6 @@ export interface NominatimPlace {
     type: string;
     importance: number;
     icon: string;
-}
+};
 
 export type NominatimPlaceOptions = NominatimPlace[] | undefined;

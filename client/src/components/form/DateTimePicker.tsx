@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { DATE_TIME_FORMAT } from '../../utils';
 import DateFnsUtils from '@date-io/date-fns';
@@ -19,8 +19,9 @@ export const DateTimePicker: React.FC<{ name: string; label: string }> = ({ name
                 name={getFieldProps(name).name}
                 value={getFieldProps(name).value}
                 onChange={handleChange}
-                variant="inline"
-                ampm={true}
+                variant="dialog"
+                inputVariant={'filled'}
+                ampm={false}
                 label={label}
                 fullWidth={true}
                 format={DATE_TIME_FORMAT}

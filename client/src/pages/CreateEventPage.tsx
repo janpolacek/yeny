@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { makeStyles, Step, StepLabel, Stepper } from '@material-ui/core';
-import { CreateEventForm } from '../components/forms/CreateEventForm';
+import { makeStyles } from '@material-ui/core';
+import { CreateEventForm } from '../components/form/CreateEventForm';
+import { CreateEvent_createEvent } from '../_generated/CreateEvent';
 
 const useStyles = makeStyles(theme => ({
     stepper: {
@@ -9,18 +10,24 @@ const useStyles = makeStyles(theme => ({
 }));
 export const CreateEventPage = () => {
     const classes = useStyles();
-    const steps = ['Event details', 'Review', 'Confirmation'];
+    const [createdEvent, setCreatedEvent] = useState<CreateEvent_createEvent>();
     const [activeStep, setActiveStep] = useState(0);
     return (
         <>
-            <Stepper activeStep={activeStep} className={classes.stepper}>
-                {steps.map(label => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-            {activeStep === 0 && <CreateEventForm />}
+            {activeStep === 0 && (
+                <CreateEventForm
+                    afterSubmit={event => {
+                        setActiveStep(1);
+                        setCreatedEvent(event);
+                    }}
+                />
+            )}
+            {activeStep === 1 && createdEvent && (
+                <div>
+                    Event was succesfully created, confirm ..
+                    <a href={`/event/${createdEvent.url}`}>{createdEvent.title}</a>
+                </div>
+            )}
         </>
     );
 };

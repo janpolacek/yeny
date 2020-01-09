@@ -2,7 +2,7 @@ import * as faker from 'faker';
 import { addDays } from 'date-fns';
 import { CreateEventFormValues } from '../../../_types/CreateEventForm';
 
-export function generateEventData(): CreateEventFormValues {
+export function generatedCreateEventData(): CreateEventFormValues {
     const title = faker.random.words();
     const dateFrom = faker.date.future();
     const dateTo = addDays(dateFrom, 5);

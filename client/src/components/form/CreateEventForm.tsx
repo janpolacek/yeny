@@ -1,21 +1,24 @@
-import React from 'react';
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
 import { DateTimePicker } from './DateTimePicker';
 import { endOfTomorrow, startOfTomorrow } from 'date-fns';
 import { BannerUpload, uploadToImgur } from './BannerUpload';
 import { PriceInput } from './PriceInput';
-import { LocationAutoComplete } from './LocationAutoComplete';
 import { Form, Formik } from 'formik';
 import { CreateEventFormValues } from '../../_types/CreateEventForm';
 import { useCreateEventFormikContext } from './useCreateEventFormikContext';
 import { useMutation } from '@apollo/react-hooks';
-import { CreateEvent, CreateEventVariables } from '../../_generated/CreateEvent';
+import { CreateEvent, CreateEvent_createEvent, CreateEventVariables } from '../../_generated/CreateEvent';
 import { CREATE_EVENT_MUTATION } from '../../_queries/CreateEvent';
-import { generateEventData } from './fixtures/fakeEvent';
+import { generatedCreateEventData } from './fixtures/fakeEvent';
+import { FormTitle } from './FormTitle';
+import { Password } from './Password';
+import { LocationField } from './location/LocationField';
 
 const DEV_ENV = true;
+
 const initialValues = DEV_ENV
-    ? generateEventData()
+    ? generatedCreateEventData()
     : {
           organizer: {
               name: '',
@@ -35,10 +38,13 @@ const initialValues = DEV_ENV
           price: null
       };
 
-export const CreateEventForm = () => {
-    const [submitData, data] = useMutation<CreateEvent, CreateEventVariables>(CREATE_EVENT_MUTATION);
+export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createEvent) => void }> = ({
+    afterSubmit
+}) => {
+    const [submitData, { data }] = useMutation<CreateEvent, CreateEventVariables>(CREATE_EVENT_MUTATION);
     const handleSubmit = async (values: CreateEventFormValues) => {
         let image = null;
+
         if (values.image) {
             const { link } = await uploadToImgur(values.image);
             image = link;
@@ -57,6 +63,13 @@ export const CreateEventForm = () => {
             }
         });
     };
+
+    useEffect(() => {
+        if (data?.createEvent) {
+            afterSubmit(data.createEvent);
+        }
+    }, [data?.createEvent]);
+
     return (
         <Formik<CreateEventFormValues> initialValues={initialValues} onSubmit={handleSubmit}>
             <Form>
@@ -76,13 +89,13 @@ const EventOrganizer = () => {
     return (
         <>
             <FormTitle>Organizer info</FormTitle>
-            <Grid item sm={12}>
-                <TextField {...getFieldProps('organizer.name')} label="Your name" fullWidth required />
+            <Grid item xs={12} sm={6}>
+                <TextField {...getFieldProps('organizer.name')} label="Name / Organization" fullWidth required />
             </Grid>
-            <Grid item sm={12}>
+            <Grid item xs={12} sm={6}>
                 <TextField
                     {...getFieldProps('organizer.email')}
-                    label="Email address"
+                    label="E-mail address"
                     type="email"
                     fullWidth
                     required
@@ -97,48 +110,36 @@ const EventDetails = () => {
 
     return (
         <>
-            <FormTitle>Event details</FormTitle>
-            <Grid item sm={12}>
+            <FormTitle>Event banner</FormTitle>
+            <Grid item xs={12}>
                 <BannerUpload />
             </Grid>
-            <Grid item sm={12}>
-                <TextField {...getFieldProps('title')} label="Event title" fullWidth required />
+            <FormTitle>Event details</FormTitle>
+            <Grid item xs={12}>
+                <TextField {...getFieldProps('title')} label="Title" fullWidth required />
             </Grid>
-            <Grid item sm={12}>
-                <LocationAutoComplete />
+            <LocationField />
+            <Grid item xs={12}>
+                <TextField
+                    {...getFieldProps('description')}
+                    label="Description"
+                    multiline
+                    variant={'outlined'}
+                    rows={4}
+                    fullWidth
+                    required
+                />
             </Grid>
-            <Grid item sm={12}>
-                <TextField {...getFieldProps('description')} label="Description" multiline fullWidth required />
-            </Grid>
-            <Grid container item>
-                <Grid item sm={6}>
+            <Grid container item spacing={2}>
+                <Grid item xs={12} sm={6}>
                     <DateTimePicker name="dateFrom" label="Date from" />
                 </Grid>
-                <Grid item sm={6}>
+                <Grid item xs={12} sm={6}>
                     <DateTimePicker name="dateTo" label="Date to" />
                 </Grid>
             </Grid>
-            <Grid item sm={12}>
+            <Grid item xs={12} sm={6}>
                 <PriceInput {...getFieldProps('price')} label="Price" placeholder="Free" />
-            </Grid>
-        </>
-    );
-};
-
-const Password = () => {
-    const { getFieldProps } = useCreateEventFormikContext();
-    return (
-        <>
-            <FormTitle>Password</FormTitle>
-            <FormSubTitle>You will need it for editing of your event</FormSubTitle>
-            <Grid item sm={12}>
-                <TextField
-                    {...getFieldProps('password')}
-                    label="Password"
-                    placeholder="Password"
-                    type={'password'}
-                    fullWidth
-                />
             </Grid>
         </>
     );
@@ -148,23 +149,7 @@ const Submit = () => {
     const { submitForm } = useCreateEventFormikContext();
     return (
         <Button variant={'outlined'} onClick={submitForm}>
-            Submit
+            Create event
         </Button>
-    );
-};
-
-const FormTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return (
-        <Grid item sm={12}>
-            <Typography variant={'h5'}>{children}</Typography>
-        </Grid>
-    );
-};
-
-const FormSubTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return (
-        <Grid item sm={12}>
-            <Typography variant={'subtitle1'}>{children}</Typography>
-        </Grid>
     );
 };

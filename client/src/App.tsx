@@ -8,6 +8,7 @@ import { Header } from './components/Header';
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import { PageContainer } from './components/PageContainer';
 import { CreateEventPage } from './pages/CreateEventPage';
+import { Footer } from './components/Footer';
 
 const useStyles = makeStyles(theme => ({
     app: {
@@ -34,6 +35,7 @@ const App = () => {
                             <Route children={() => <HomePage />} />
                         </Switch>
                     </PageContainer>
+                    <Footer />
                 </main>
             </Router>
         </ApolloProvider>

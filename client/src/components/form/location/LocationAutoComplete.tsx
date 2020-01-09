@@ -2,29 +2,48 @@ import React, { useCallback, useEffect } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { throttle } from 'lodash-es';
 import axios from 'axios';
-import { NominatimPlace, NominatimPlaceOptions } from '../../_types/NominatimPlace';
+import { NominatimPlace, NominatimPlaceOptions } from '../../../_types/NominatimPlace';
 import { LocationMap } from './LocationMap';
 import { LatLngTuple } from 'leaflet';
-import { LocationAutoCompleteInput } from './LocationInput';
-import { useCreateEventFormikContext } from './useCreateEventFormikContext';
-import { CreateEventFormValues } from '../../_types/CreateEventForm';
+import { LocationDialogNameInput } from './LocationNameInput';
+import { useFormikContext } from 'formik';
+import { LocationForm } from '../../../_types/LocationForm';
+import { makeStyles } from '@material-ui/core';
+import { LocationInput } from '../../../_generated/globalTypes';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import * as colors from '@material-ui/core/colors';
+
+const useStyles = makeStyles(theme => ({
+    listbox: {
+        '&.MuiAutocomplete-listbox': {
+            maxHeight: '200px'
+        }
+    },
+    legend: {
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: theme.spacing(1),
+        color: colors.grey['800']
+    }
+}));
 
 const fetchLocationDebounced = throttle(async (query: string) => {
     const result = await axios.get<NominatimPlace[]>(`https://nominatim.openstreetmap.org/search/${query}?format=json`);
     return result.data;
-}, 200);
+}, 100);
+
+const useLocationFormFormikValue = () => {
+    const { values: location, setValues } = useFormikContext<LocationForm>();
+
+    const setLocation = useCallback((value: LocationForm) => setValues(value), [setValues]);
+
+    return { location, setLocation };
+};
 
 const useOsmAutoComplete = () => {
-    const {
-        values: { location },
-        setFieldValue
-    } = useCreateEventFormikContext();
+    const { location, setLocation } = useLocationFormFormikValue();
 
     const [options, setOptions] = React.useState<NominatimPlaceOptions>([]);
-    const setLocation = useCallback(
-        (value: Partial<CreateEventFormValues['location']>) => setFieldValue('location', value),
-        [setFieldValue]
-    );
 
     const onInputChange = (event: React.ChangeEvent<{}>, value: any, reason: 'input' | 'reset') => {
         setLocation({
@@ -34,7 +53,6 @@ const useOsmAutoComplete = () => {
 
     useEffect(() => {
         let active = true;
-
         if (!location.name) {
             setOptions([]);
             return;
@@ -44,7 +62,7 @@ const useOsmAutoComplete = () => {
 
         fetchLocationDebounced(location.name).then(results => {
             if (active) {
-                setOptions(results || []);
+                setOptions((results ?? []).slice(0, 10));
             }
         });
 
@@ -68,6 +86,7 @@ const useOsmAutoComplete = () => {
 };
 
 export const LocationAutoComplete = () => {
+    const classes = useStyles();
     const { location, options, onInputChange } = useOsmAutoComplete();
 
     const loading = location?.name?.length !== 0 && options === undefined;
@@ -80,6 +99,9 @@ export const LocationAutoComplete = () => {
         <>
             <Autocomplete
                 id="location"
+                classes={{
+                    listbox: classes.listbox
+                }}
                 getOptionLabel={(option: NominatimPlace | string) =>
                     typeof option === 'string' ? option : option.display_name
                 }
@@ -94,10 +116,28 @@ export const LocationAutoComplete = () => {
                 disableOpenOnFocus
                 value={location.name}
                 onInputChange={onInputChange}
-                renderInput={params => <LocationAutoCompleteInput loading={loading} params={params} />}
+                renderInput={params => <LocationDialogNameInput loading={loading} params={params} />}
                 renderOption={(option: NominatimPlace) => option.display_name}
             />
             <LocationMap position={position} />
+            <LocationInfo location={location} />
         </>
+    );
+};
+
+const LocationInfo: React.FC<{ location?: Partial<LocationInput> }> = ({ location }) => {
+    const classes = useStyles();
+
+    if (!location || !location?.latitude || !location.longitude) {
+        return null;
+    }
+
+    return (
+        <div className={classes.legend}>
+            <LocationOnIcon />
+            <span>
+                Location: {location.latitude}, {location.longitude}
+            </span>
+        </div>
     );
 };
