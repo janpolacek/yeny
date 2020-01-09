@@ -1,9 +1,9 @@
 import { Grid } from '@material-ui/core';
 import React, { useCallback, useState } from 'react';
-import { LocationFormDialog } from './LocationFormDialog';
-import { useCreateEventFormikContext } from '../useCreateEventFormikContext';
-import { LocationForm } from '../../../_types/LocationForm';
-import { LocationFormNameInput } from './LocationNameInput';
+import { LocationFormDialog } from 'components/form/location/LocationFormDialog';
+import { useCreateEventFormikContext } from 'components/form/useCreateEventFormikContext';
+import { LocationForm } from '_types/LocationForm';
+import { LocationFormNameInput } from 'components/form/location/LocationNameInput';
 
 const useCreateEventFormLocationvalue = () => {
     const {

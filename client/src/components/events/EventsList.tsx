@@ -1,8 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { GetEvents, GetEventsVariables } from '../../_generated/GetEvents';
-import { GET_EVENTS } from '../../_queries/GetEvents';
-import { EventItem, EventItemSkeleton } from './EventItem';
+import { GetEvents, GetEventsVariables } from '_generated/GetEvents';
+import { GET_EVENTS } from '_queries/GetEvents';
+import { EventItem, EventItemSkeleton } from 'components/events/EventItem';
 import { makeStyles, Typography } from '@material-ui/core';
 import * as colors from '@material-ui/core/colors';
 
@@ -27,7 +27,7 @@ export const EventsList = () => {
             <Typography component={'h2'} variant={'h5'} className={classes.header}>
                 Your events nearby You
             </Typography>
-            {data.events?.map(event => (
+            {data?.getEvents?.map(event => (
                 <EventItem event={event} key={event.url} />
             ))}
         </>

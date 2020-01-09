@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { Button, Grid, makeStyles } from '@material-ui/core';
-import { useCreateEventFormikContext } from './useCreateEventFormikContext';
+import { useCreateEventFormikContext } from 'components/form/useCreateEventFormikContext';
 import axios from 'axios';
-import { ImgurResponse } from '../../_types/Imgur';
-import placeholder from '../../assets/placeholder_sample.png';
+import { ImgurResponse } from '_types/Imgur';
+import placeholder from 'assets/placeholder_sample.png';
 import * as colors from '@material-ui/core/colors';
 export const uploadToImgur = async (image: File) => {
     const result = await axios.post<ImgurResponse>('https://api.imgur.com/3/image', image, {
@@ -85,12 +85,12 @@ export const BannerUpload = () => {
                     ref={fileInputRef}
                 />
                 <label htmlFor={'image_input'} className={classes.uploadButton}>
-                    <Button component="span" variant={'outlined'}>
+                    <Button type={'button'} variant={'outlined'}>
                         {imageSrc ? 'Change' : 'Upload'}
                     </Button>
                 </label>
                 {imageSrc && (
-                    <Button component="span" className={classes.clearButton} variant={'outlined'} onClick={handleClear}>
+                    <Button type={'button'} className={classes.clearButton} variant={'outlined'} onClick={handleClear}>
                         Remove
                     </Button>
                 )}

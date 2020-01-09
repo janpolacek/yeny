@@ -1,6 +1,6 @@
 import { Container, makeStyles } from '@material-ui/core';
 import * as React from 'react';
-import { useScrollTop } from '../utils';
+import { useScrollTop } from 'utils';
 
 const useStyles = makeStyles(theme => ({
     container: {

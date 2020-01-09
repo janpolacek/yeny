@@ -1,6 +1,6 @@
 import * as faker from 'faker';
 import { addDays } from 'date-fns';
-import { CreateEventFormValues } from '../../../_types/CreateEventForm';
+import { CreateEventFormValues } from '_types/CreateEventForm';
 
 export function generatedCreateEventData(): CreateEventFormValues {
     const title = faker.random.words();

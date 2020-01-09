@@ -1,8 +1,8 @@
-import { useCreateEventFormikContext } from './useCreateEventFormikContext';
+import { useCreateEventFormikContext } from 'components/form/useCreateEventFormikContext';
 import React, { useState } from 'react';
 import { Grid, IconButton, InputAdornment, TextField } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { FormSubTitle, FormTitle } from './FormTitle';
+import { FormSubTitle, FormTitle } from 'components/form/FormTitle';
 
 export const Password = () => {
     const { getFieldProps } = useCreateEventFormikContext();

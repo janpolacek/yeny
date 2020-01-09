@@ -1,12 +1,12 @@
 import { Card, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core';
 import * as colors from '@material-ui/core/colors';
-import { GetEvents_events } from '../../_generated/GetEvents';
+import { GetEvents_getEvents } from '_generated/GetEvents';
 import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
-import { formatDate } from '../../utils';
+import { formatDate } from 'utils';
 import { Skeleton } from '@material-ui/lab';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import placeholderWhite from '../../assets/placeholder_white.png';
+import placeholderWhite from 'assets/placeholder_white.png';
 const useEventListStyles = makeStyles(theme => ({
     card: {
         display: 'flex',
@@ -51,7 +51,7 @@ const useEventListStyles = makeStyles(theme => ({
     }
 }));
 
-export const EventItem = ({ event }: { event: GetEvents_events }) => {
+export const EventItem = ({ event }: { event: GetEvents_getEvents }) => {
     const classes = useEventListStyles({});
     const history = useHistory();
     const [elevation, setElevation] = useState(0);

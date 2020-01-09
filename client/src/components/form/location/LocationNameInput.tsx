@@ -2,7 +2,7 @@ import React from 'react';
 import { RenderInputParams } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { CircularProgress, IconButton, InputAdornment } from '@material-ui/core';
-import { LocationForm } from '../../../_types/LocationForm';
+import { LocationForm } from '_types/LocationForm';
 import { AddLocation as AddLocationIcon } from '@material-ui/icons';
 
 export const LocationDialogNameInput: React.FC<{

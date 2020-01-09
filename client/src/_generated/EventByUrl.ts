@@ -3,39 +3,39 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetEventDetail
+// GraphQL query operation: EventByUrl
 // ====================================================
 
-export interface GetEventDetail_eventByUrl_location {
+export interface EventByUrl_getEvent_location {
     __typename: 'Location';
     longitude: string | null;
     latitude: string | null;
     name: string | null;
 }
 
-export interface GetEventDetail_eventByUrl_organizer {
+export interface EventByUrl_getEvent_organizer {
     __typename: 'Organizer';
     name: string;
     email: string;
 }
 
-export interface GetEventDetail_eventByUrl {
+export interface EventByUrl_getEvent {
     __typename: 'Event';
     title: string;
     description: string;
     url: string;
-    location: GetEventDetail_eventByUrl_location | null;
+    location: EventByUrl_getEvent_location | null;
     dateFrom: any;
     dateTo: any;
-    organizer: GetEventDetail_eventByUrl_organizer;
+    organizer: EventByUrl_getEvent_organizer;
     image: string | null;
     price: number | null;
 }
 
-export interface GetEventDetail {
-    eventByUrl: GetEventDetail_eventByUrl | null;
+export interface EventByUrl {
+    getEvent: EventByUrl_getEvent | null;
 }
 
-export interface GetEventDetailVariables {
+export interface EventByUrlVariables {
     url: string;
 }

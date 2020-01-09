@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import { LocationAutoComplete } from './LocationAutoComplete';
-import { LocationForm } from '../../../_types/LocationForm';
+import { LocationAutoComplete } from 'components/form/location/LocationAutoComplete';
+import { LocationForm } from '_types/LocationForm';
 import { Form, Formik } from 'formik';
-import { LocationInput } from '../../../_generated/globalTypes';
+import { LocationInput } from '_generated/globalTypes';
 
 export const LocationFormDialog: React.FC<{
     open: boolean;
@@ -34,7 +34,7 @@ export const LocationFormDialog: React.FC<{
                         <LocationAutoComplete />
                     </DialogContent>
                     <DialogActions>
-                        <Button autoFocus onClick={handleCancel} color="primary">
+                        <Button autoFocus type={'button'} onClick={handleCancel} color="primary">
                             Cancel
                         </Button>
                         <Button type="submit" color="primary">

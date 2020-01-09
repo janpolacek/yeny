@@ -1,13 +1,11 @@
-import { Arg, Args, Int, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Args, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Event } from '../../entities/Event';
 import { CreateEventInput, DeleteIventInput, GetEventsArgs } from './EventInput';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { getRepository, Repository } from 'typeorm';
-import uuid from 'uuid/v4';
 import { Organizer } from '../../entities/Organizer';
 import { Location } from '../../entities/Location';
-import speakingurl from 'speakingurl';
-import { uniqueSpeakingUrl } from '../../utils';
+import { uniqueSpeakingUrl } from 'utils';
 
 const DEV_ENV = true;
 
@@ -22,31 +20,53 @@ export class EventResolver {
         private readonly locationRepository: Repository<Location>
     ) {}
 
-    @Query(returns => [Event], { nullable: true })
-    async events(@Root() @Args() { skip, take }: GetEventsArgs) {
-        const events = await this.eventRepository
-            .createQueryBuilder('Event')
-            .where('Event.dateTo >= :now', { now: new Date() })
-            .where('Event.published = true')
-            .orderBy('Event.dateFrom', 'ASC')
+    @Query(() => [Event], { nullable: true })
+    async getEvents(@Root() @Args() { skip, take }: GetEventsArgs) {
+        return await this.eventRepository
+            .createQueryBuilder('event')
+            .leftJoinAndSelect('event.organizer', 'organizer')
+            .leftJoinAndSelect('event.organizer', 'location')
+            .where('event.dateTo >= :now', { now: new Date() })
+            .where('event.published = true')
+            .orderBy('event.dateFrom', 'ASC')
             .skip(skip)
             .take(take)
             .cache('eventsCache', DEV_ENV ? 0 : 2 * 60 * 1000)
             .getMany();
-
-        // todo: join
-        return events.map(async event => {
-            event.organizer = await this.organizerRepository.findOneOrFail({ where: { id: event.organizerId } });
-            event.location = await this.locationRepository.findOne({ where: { id: event.locationId } });
-            return event;
-        });
     }
 
     @Query(() => Event, { nullable: true })
-    async eventByUrl(@Arg('url', () => String, { nullable: false }) url: Event['url']) {
+    async getEvent(@Arg('url', () => String, { nullable: false }) url: Event['url']) {
         return await this.eventRepository.findOne({
             where: { url, published: true },
             cache: DEV_ENV ? 0 : 10 * 60 * 1000
+        });
+    }
+
+    @Query(() => [Event], { nullable: true })
+    async fullSearch(@Arg('query', () => String, { nullable: false }) query: string) {
+        const { raw, entities } = await this.eventRepository
+            .createQueryBuilder('event')
+            .leftJoinAndSelect('event.organizer', 'organizer')
+            .leftJoinAndSelect('event.location', 'location')
+            .addSelect(
+                `ts_rank_cd(
+                    to_tsvector(
+                        coalesce(event.title,'') || ' ' ||
+                        coalesce(event.description,'') || ' ' || 
+                        coalesce(location.name,'') || ' ' || 
+                        coalesce(organizer.name,'')
+                    ),
+                    plainto_tsquery(:query))
+                `,
+                'rank'
+            )
+            .orderBy('rank', 'DESC')
+            .setParameters({ query })
+            .getRawAndEntities();
+
+        return entities.filter((e, index) => {
+            return raw[index].rank > 0;
         });
     }
 

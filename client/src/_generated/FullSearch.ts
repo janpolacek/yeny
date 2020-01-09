@@ -3,20 +3,20 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetEvents
+// GraphQL query operation: FullSearch
 // ====================================================
 
-export interface GetEvents_getEvents_location {
+export interface FullSearch_fullSearch_location {
     __typename: 'Location';
     name: string | null;
 }
 
-export interface GetEvents_getEvents_organizer {
+export interface FullSearch_fullSearch_organizer {
     __typename: 'Organizer';
     name: string;
 }
 
-export interface GetEvents_getEvents {
+export interface FullSearch_fullSearch {
     __typename: 'Event';
     title: string;
     url: string;
@@ -25,14 +25,14 @@ export interface GetEvents_getEvents {
     image: string | null;
     dateFrom: any;
     dateTo: any;
-    location: GetEvents_getEvents_location | null;
-    organizer: GetEvents_getEvents_organizer;
+    location: FullSearch_fullSearch_location | null;
+    organizer: FullSearch_fullSearch_organizer;
 }
 
-export interface GetEvents {
-    getEvents: GetEvents_getEvents[] | null;
+export interface FullSearch {
+    fullSearch: FullSearch_fullSearch[] | null;
 }
 
-export interface GetEventsVariables {
-    take?: number | null;
+export interface FullSearchVariables {
+    query: string;
 }

@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { DATE_TIME_FORMAT } from '../../utils';
+import { DATE_TIME_FORMAT } from 'utils';
 import DateFnsUtils from '@date-io/date-fns';
-import { useCreateEventFormikContext } from './useCreateEventFormikContext';
+import { useCreateEventFormikContext } from 'components/form/useCreateEventFormikContext';
 
 export const DateTimePicker: React.FC<{ name: string; label: string }> = ({ name, label }) => {
     const { getFieldProps, setFieldValue } = useCreateEventFormikContext();

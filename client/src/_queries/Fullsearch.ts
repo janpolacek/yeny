@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const GET_EVENTS = gql`
-    query GetEvents($take: Int) {
-        getEvents(take: $take) {
+export const FULLSEARCH_EVENTS = gql`
+    query FullSearch($query: String!) {
+        fullSearch(query: $query) {
             title
             url
             price

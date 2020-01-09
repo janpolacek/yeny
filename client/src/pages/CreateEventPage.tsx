@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { CreateEventForm } from '../components/form/CreateEventForm';
-import { CreateEvent_createEvent } from '../_generated/CreateEvent';
+import { CreateEventForm } from 'components/form/CreateEventForm';
+import { CreateEvent_createEvent } from '_generated/CreateEvent';
 
 const useStyles = makeStyles(theme => ({
+    root: {},
     stepper: {
         padding: theme.spacing(2, 0)
     }
@@ -13,7 +14,7 @@ export const CreateEventPage = () => {
     const [createdEvent, setCreatedEvent] = useState<CreateEvent_createEvent>();
     const [activeStep, setActiveStep] = useState(0);
     return (
-        <>
+        <div className={classes.root}>
             {activeStep === 0 && (
                 <CreateEventForm
                     afterSubmit={event => {
@@ -28,6 +29,6 @@ export const CreateEventPage = () => {
                     <a href={`/event/${createdEvent.url}`}>{createdEvent.title}</a>
                 </div>
             )}
-        </>
+        </div>
     );
 };

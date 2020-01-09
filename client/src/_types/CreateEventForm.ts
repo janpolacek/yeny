@@ -1,5 +1,5 @@
-import { CreateEventVariables } from '../_generated/CreateEvent';
-import { LocationInput, OrganizerInput } from '../_generated/globalTypes';
+import { CreateEventVariables } from '_generated/CreateEvent';
+import { LocationInput, OrganizerInput } from '_generated/globalTypes';
 
 export type CreateEventFormValues = {
     organizer: OrganizerInput;

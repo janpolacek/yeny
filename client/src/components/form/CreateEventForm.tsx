@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
-import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
-import { DateTimePicker } from './DateTimePicker';
+import { Button, Grid, TextField } from '@material-ui/core';
+import { DateTimePicker } from 'components/form/DateTimePicker';
 import { endOfTomorrow, startOfTomorrow } from 'date-fns';
-import { BannerUpload, uploadToImgur } from './BannerUpload';
-import { PriceInput } from './PriceInput';
+import { BannerUpload, uploadToImgur } from 'components/form/BannerUpload';
+import { PriceInput } from 'components/form/PriceInput';
 import { Form, Formik } from 'formik';
-import { CreateEventFormValues } from '../../_types/CreateEventForm';
-import { useCreateEventFormikContext } from './useCreateEventFormikContext';
+import { CreateEventFormValues } from '_types/CreateEventForm';
+import { useCreateEventFormikContext } from 'components/form/useCreateEventFormikContext';
 import { useMutation } from '@apollo/react-hooks';
-import { CreateEvent, CreateEvent_createEvent, CreateEventVariables } from '../../_generated/CreateEvent';
-import { CREATE_EVENT_MUTATION } from '../../_queries/CreateEvent';
-import { generatedCreateEventData } from './fixtures/fakeEvent';
-import { FormTitle } from './FormTitle';
-import { Password } from './Password';
-import { LocationField } from './location/LocationField';
+import { CreateEvent, CreateEvent_createEvent, CreateEventVariables } from '_generated/CreateEvent';
+import { CREATE_EVENT_MUTATION } from '_queries/CreateEvent';
+import { generatedCreateEventData } from 'components/form/fixtures/fakeEvent';
+import { FormTitle } from 'components/form/FormTitle';
+import { Password } from 'components/form/Password';
+import { LocationField } from 'components/form/location/LocationField';
 
 const DEV_ENV = true;
 
@@ -68,7 +68,7 @@ export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createE
         if (data?.createEvent) {
             afterSubmit(data.createEvent);
         }
-    }, [data?.createEvent]);
+    }, [data, afterSubmit]);
 
     return (
         <Formik<CreateEventFormValues> initialValues={initialValues} onSubmit={handleSubmit}>
@@ -148,7 +148,7 @@ const EventDetails = () => {
 const Submit = () => {
     const { submitForm } = useCreateEventFormikContext();
     return (
-        <Button variant={'outlined'} onClick={submitForm}>
+        <Button type={'submit'} variant={'outlined'} onClick={submitForm}>
             Create event
         </Button>
     );
