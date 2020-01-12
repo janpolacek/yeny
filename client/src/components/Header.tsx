@@ -1,19 +1,19 @@
 import { AppBar, Button, fade, Link, makeStyles, Toolbar } from '@material-ui/core';
 import * as React from 'react';
-import SearchIcon from '@material-ui/icons/Search';
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/logo.svg';
 import * as colors from '@material-ui/core/colors';
+import { Search } from './Search';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        backgroundColor: colors.red['800']
+        backgroundColor: colors.red['800'],
     },
     logo: {
         padding: theme.spacing(1),
         flexGrow: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     logoIcon: {
         display: 'flex',
@@ -23,12 +23,12 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             stroke: fade(theme.palette.common.white, 0.8),
             scale: '1.05',
-            cursor: 'pointer'
-        }
+            cursor: 'pointer',
+        },
     },
     addNewButton: {
-        margin: theme.spacing(1)
-    }
+        margin: theme.spacing(1),
+    },
 }));
 
 export const Header = () => {
@@ -49,7 +49,7 @@ export const Header = () => {
                 <Link className={classes.logo}>
                     <Logo className={classes.logoIcon} onClick={handleLogoClick} />
                 </Link>
-                <SearchIcon />
+                <Search />
                 <Button
                     color="inherit"
                     type={'button'}

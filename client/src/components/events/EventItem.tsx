@@ -11,35 +11,40 @@ const useEventListStyles = makeStyles(theme => ({
     card: {
         display: 'flex',
         padding: theme.spacing(2),
-        marginBottom: theme.spacing(1)
+        marginBottom: theme.spacing(1),
     },
     cardHover: {
         '&:hover': {
-            cursor: 'pointer'
-        }
+            cursor: 'pointer',
+        },
     },
     details: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     content: {
         flex: '1 0 auto',
-        padding: 0
+        padding: 0,
     },
     fromDate: {
-        color: colors.red.A700
+        color: colors.red.A700,
     },
     location: {
+        textTransform: 'capitalize',
         display: 'flex',
         alignItems: 'center',
-        marginBottom: theme.spacing(1)
+        marginBottom: theme.spacing(1),
     },
     delimiter: {
         color: colors.grey['400'],
-        margin: `0 ${theme.spacing(0.5)}px`
+        margin: `0 ${theme.spacing(0.5)}px`,
+    },
+    title: {
+        textTransform: 'capitalize',
     },
     description: {
-        color: colors.grey['800']
+        textTransform: 'capitalize',
+        color: colors.grey['800'],
     },
 
     cover: {
@@ -47,8 +52,8 @@ const useEventListStyles = makeStyles(theme => ({
         height: 110,
         width: 220,
         border: `1px solid ${colors.grey['300']}`,
-        marginRight: theme.spacing(2)
-    }
+        marginRight: theme.spacing(2),
+    },
 }));
 
 export const EventItem = ({ event }: { event: GetEvents_getEvents }) => {
@@ -73,7 +78,7 @@ export const EventItem = ({ event }: { event: GetEvents_getEvents }) => {
             <CardMedia className={classes.cover} image={event.image ?? placeholderWhite} title={event.title} />
             <div className={classes.details}>
                 <CardContent className={classes.content}>
-                    <Typography variant={'h6'}>
+                    <Typography variant={'h6'} className={classes.title}>
                         <span className={classes.fromDate}>{formatDate(event.dateFrom)}</span>
                         <span className={classes.delimiter}>|</span>
 

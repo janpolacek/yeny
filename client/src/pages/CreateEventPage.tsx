@@ -6,8 +6,8 @@ import { CreateEvent_createEvent } from '_generated/CreateEvent';
 const useStyles = makeStyles(theme => ({
     root: {},
     stepper: {
-        padding: theme.spacing(2, 0)
-    }
+        padding: theme.spacing(2, 0),
+    },
 }));
 export const CreateEventPage = () => {
     const classes = useStyles();
@@ -25,7 +25,7 @@ export const CreateEventPage = () => {
             )}
             {activeStep === 1 && createdEvent && (
                 <div>
-                    Event was succesfully created, confirm ..
+                    Event was succesfully created.
                     <a href={`/event/${createdEvent.url}`}>{createdEvent.title}</a>
                 </div>
             )}

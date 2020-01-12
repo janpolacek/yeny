@@ -8,8 +8,12 @@ const DEV_ENV = true;
 function fakeOrganizer(): Partial<Organizer> {
     return {
         name: `${faker.name.firstName()} ${faker.name.lastName()}`,
-        email: faker.internet.email()
+        email: faker.internet.email(),
     };
+}
+
+function randomPicsumImage() {
+    return `https://picsum.photos/640/480/?random=${Math.floor(Math.random() * 1000)}`;
 }
 
 function fakeEvent(fakeOrganizer: Partial<Organizer>) {
@@ -24,15 +28,15 @@ function fakeEvent(fakeOrganizer: Partial<Organizer>) {
         password: 'password',
         dateFrom: dateFrom,
         dateTo: dateTo,
-        image: faker.image.imageUrl(undefined, undefined, undefined, true, true),
+        image: randomPicsumImage(),
         organizer: fakeOrganizer,
         price: Number(faker.commerce.price(0, 10)),
         location: {
             longitude: faker.address.longitude(),
             latitude: faker.address.latitude(),
-            name: faker.address.city()
+            name: faker.address.city(),
         },
-        published: DEV_ENV
+        published: DEV_ENV,
     };
 }
 
@@ -47,7 +51,7 @@ export async function seedDatabase() {
                 fakeEvent(organizer),
                 fakeEvent(organizer),
                 fakeEvent(organizer),
-                fakeEvent(organizer)
+                fakeEvent(organizer),
             ];
         })
         .flat();
