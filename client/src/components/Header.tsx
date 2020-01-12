@@ -27,7 +27,9 @@ const useStyles = makeStyles(theme => ({
         },
     },
     addNewButton: {
-        margin: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(4),
+        padding: theme.spacing(1),
     },
 }));
 
@@ -53,6 +55,7 @@ export const Header = () => {
                 <Button
                     color="inherit"
                     type={'button'}
+                    variant={'outlined'}
                     className={classes.addNewButton}
                     onClick={handleCreateEventClick}
                 >

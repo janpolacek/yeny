@@ -2,32 +2,24 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { CreateEventForm } from 'components/form/CreateEventForm';
 import { CreateEvent_createEvent } from '_generated/CreateEvent';
+import { CreateEventSuccess } from 'components/form/CreateEventSuccess';
 
 const useStyles = makeStyles(theme => ({
     root: {},
-    stepper: {
-        padding: theme.spacing(2, 0),
-    },
 }));
 export const CreateEventPage = () => {
     const classes = useStyles();
     const [createdEvent, setCreatedEvent] = useState<CreateEvent_createEvent>();
-    const [activeStep, setActiveStep] = useState(0);
     return (
         <div className={classes.root}>
-            {activeStep === 0 && (
+            {!createdEvent ? (
                 <CreateEventForm
                     afterSubmit={event => {
-                        setActiveStep(1);
                         setCreatedEvent(event);
                     }}
                 />
-            )}
-            {activeStep === 1 && createdEvent && (
-                <div>
-                    Event was succesfully created.
-                    <a href={`/event/${createdEvent.url}`}>{createdEvent.title}</a>
-                </div>
+            ) : (
+                <CreateEventSuccess event={createdEvent} />
             )}
         </div>
     );

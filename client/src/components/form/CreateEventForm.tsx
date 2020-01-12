@@ -14,6 +14,7 @@ import { generatedCreateEventData } from 'components/form/fixtures/fakeEvent';
 import { FormTitle } from 'components/form/FormTitle';
 import { Password } from 'components/form/Password';
 import { LocationField } from 'components/form/location/LocationField';
+import { Prompt } from 'react-router-dom';
 
 const DEV_ENV = true;
 
@@ -22,26 +23,26 @@ const initialValues = DEV_ENV
     : {
           organizer: {
               name: '',
-              email: ''
+              email: '',
           },
           image: null,
           title: '',
           location: {
               name: '',
               longitude: null,
-              latitude: null
+              latitude: null,
           },
           description: '',
           dateFrom: startOfTomorrow(),
           dateTo: endOfTomorrow(),
           password: '',
-          price: null
+          price: null,
       };
 
 export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createEvent) => void }> = ({
-    afterSubmit
+    afterSubmit,
 }) => {
-    const [submitData, { data }] = useMutation<CreateEvent, CreateEventVariables>(CREATE_EVENT_MUTATION);
+    const [submitData, { data }] = useMutation<CreateEvent, CreateEventVariables>(CREATE_EVENT_MUTATION, {});
     const handleSubmit = async (values: CreateEventFormValues) => {
         let image = null;
 
@@ -59,8 +60,8 @@ export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createE
                 image: image,
                 price: values.price,
                 location: values.location,
-                password: values.password
-            }
+                password: values.password,
+            },
         });
     };
 
@@ -72,6 +73,17 @@ export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createE
 
     return (
         <Formik<CreateEventFormValues> initialValues={initialValues} onSubmit={handleSubmit}>
+            <FormikContent />
+        </Formik>
+    );
+};
+
+const FormikContent = () => {
+    const { dirty } = useCreateEventFormikContext();
+
+    return (
+        <>
+            <Prompt when={dirty} message="Are you sure you want to leave?" />
             <Form>
                 <Grid container spacing={2}>
                     <EventOrganizer />
@@ -80,7 +92,7 @@ export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createE
                     <Submit />
                 </Grid>
             </Form>
-        </Formik>
+        </>
     );
 };
 

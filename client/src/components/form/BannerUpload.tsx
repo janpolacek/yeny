@@ -7,7 +7,7 @@ import placeholder from 'assets/placeholder_sample.png';
 import * as colors from '@material-ui/core/colors';
 export const uploadToImgur = async (image: File) => {
     const result = await axios.post<ImgurResponse>('https://api.imgur.com/3/image', image, {
-        headers: { Authorization: 'Client-ID f1ab775b582fa27' }
+        headers: { Authorization: 'Client-ID f1ab775b582fa27' },
     });
 
     return result.data.data;
@@ -15,31 +15,31 @@ export const uploadToImgur = async (image: File) => {
 
 const useStyles = makeStyles(theme => ({
     input: {
-        display: 'none'
+        display: 'none',
     },
     container: {
         height: '300px',
         overflow: 'hidden',
-        position: 'relative'
+        position: 'relative',
     },
     clearButton: {
         position: 'absolute',
         right: theme.spacing(2),
 
-        top: theme.spacing(8)
+        top: theme.spacing(8),
     },
     uploadButton: {
         position: 'absolute',
         right: theme.spacing(2),
-        top: theme.spacing(2)
+        top: theme.spacing(2),
     },
     image: {
         width: '100%',
         height: '100%',
         objectFit: 'cover',
         overflow: 'hidden',
-        border: `1px solid ${colors.grey['300']}`
-    }
+        border: `1px solid ${colors.grey['300']}`,
+    },
 }));
 
 export const BannerUpload = () => {
@@ -85,12 +85,12 @@ export const BannerUpload = () => {
                     ref={fileInputRef}
                 />
                 <label htmlFor={'image_input'} className={classes.uploadButton}>
-                    <Button type={'button'} variant={'outlined'}>
+                    <Button component="span" variant={'outlined'}>
                         {imageSrc ? 'Change' : 'Upload'}
                     </Button>
                 </label>
                 {imageSrc && (
-                    <Button type={'button'} className={classes.clearButton} variant={'outlined'} onClick={handleClear}>
+                    <Button component="span" className={classes.clearButton} variant={'outlined'} onClick={handleClear}>
                         Remove
                     </Button>
                 )}

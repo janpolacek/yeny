@@ -1,0 +1,17 @@
+{
+    "title": "Incredible Gold synthesize",
+    "description": "Quibusdam aut non sit voluptatem aperiam eaque quibusdam. Est maxime reprehenderit voluptatum voluptas accusantium. Dicta voluptatem et unde doloremque laborum ut autem.",
+    "url": "incredible-gold-synthesize-795719",
+    "location": {
+        "longitude": "171.7600",
+        "latitude": "-34.4587",
+        "name": "Lake Alishastad",
+        "__typename": "Location"
+    },
+    "dateFrom": "2020-04-06T05:03:15.408Z",
+    "dateTo": "2020-04-11T05:03:15.408Z",
+    "organizer": { "name": "Kurtis Pagac", "email": "Harmon74@gmail.com", "__typename": "Organizer" },
+    "image": null,
+    "price": 5,
+    "__typename": "Event"
+}

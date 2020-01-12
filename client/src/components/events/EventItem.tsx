@@ -2,11 +2,12 @@ import { Card, CardContent, CardMedia, makeStyles, Typography } from '@material-
 import * as colors from '@material-ui/core/colors';
 import { GetEvents_getEvents } from '_generated/GetEvents';
 import { useHistory } from 'react-router-dom';
-import React, { useState } from 'react';
+import React from 'react';
 import { formatDate } from 'utils';
 import { Skeleton } from '@material-ui/lab';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import placeholderWhite from 'assets/placeholder_white.png';
+
 const useEventListStyles = makeStyles(theme => ({
     card: {
         display: 'flex',
@@ -14,7 +15,9 @@ const useEventListStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(1),
     },
     cardHover: {
+        border: '1px solid transparent',
         '&:hover': {
+            border: `1px solid ${colors.grey['400']}`,
             cursor: 'pointer',
         },
     },
@@ -59,22 +62,12 @@ const useEventListStyles = makeStyles(theme => ({
 export const EventItem = ({ event }: { event: GetEvents_getEvents }) => {
     const classes = useEventListStyles({});
     const history = useHistory();
-    const [elevation, setElevation] = useState(0);
-
-    const handleMouseOver = () => setElevation(2);
-    const handleMouseOut = () => setElevation(0);
 
     const handleClick = () => {
         history.push(`/event/${event.url}`);
     };
     return (
-        <Card
-            onClick={handleClick}
-            className={`${classes.card} ${classes.cardHover}`}
-            elevation={elevation}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-        >
+        <Card onClick={handleClick} className={`${classes.card} ${classes.cardHover}`} elevation={0}>
             <CardMedia className={classes.cover} image={event.image ?? placeholderWhite} title={event.title} />
             <div className={classes.details}>
                 <CardContent className={classes.content}>

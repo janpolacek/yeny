@@ -2,6 +2,7 @@ import {
     Card,
     CardContent,
     CardMedia,
+    CircularProgress,
     fade,
     InputBase,
     makeStyles,
@@ -16,7 +17,7 @@ import { FullSearch, FullSearch_fullSearch, FullSearchVariables } from '_generat
 import { FULLSEARCH_EVENTS } from '_queries/Fullsearch';
 import SearchIcon from '@material-ui/icons/Search';
 import { useAutocomplete } from '@material-ui/lab';
-import placeholderWhite from '../assets/placeholder_white.png';
+import placeholderWhite from 'assets/placeholder_white.png';
 import * as colors from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
 
@@ -37,8 +38,7 @@ const useStyles = makeStyles(theme => ({
             width: 'auto',
         },
     },
-    searchIcon: {
-        width: theme.spacing(7),
+    inputIcon: {
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
@@ -46,13 +46,21 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    searchIcon: {
+        width: theme.spacing(7),
+    },
+    loadingIcon: {
+        width: theme.spacing(4),
+        right: 0,
+        top: 0,
+    },
     inputRoot: {
         color: 'inherit',
     },
     inputInput: {
-        padding: theme.spacing(1, 1, 1, 7),
+        padding: theme.spacing(1, 4, 1, 7),
         transition: theme.transitions.create('width'),
-        width: 120,
+        width: 240,
         '&:focus': {
             width: 360,
         },
@@ -133,7 +141,7 @@ export const Search = () => {
     return (
         <div className={classes.searchRoot}>
             <div {...getRootProps()} className={classes.searchInput} ref={inputRef}>
-                <div className={classes.searchIcon}>
+                <div className={`${classes.searchIcon} ${classes.inputIcon}`}>
                     <SearchIcon />
                 </div>
                 <InputBase
@@ -145,6 +153,9 @@ export const Search = () => {
                     }}
                     inputProps={{ 'aria-label': 'search' }}
                 />
+                <div className={`${classes.loadingIcon} ${classes.inputIcon}`}>
+                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                </div>
             </div>
             <Popper
                 open={groupedOptions.length > 0 && inputRef.current !== null}

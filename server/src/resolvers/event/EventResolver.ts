@@ -2,7 +2,7 @@ import { Arg, Args, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Event } from '../../entities/Event';
 import { CreateEventInput, DeleteIventInput, GetEventsArgs } from './EventInput';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { getRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Organizer } from '../../entities/Organizer';
 import { Location } from '../../entities/Location';
 import { uniqueSpeakingUrl } from '../../utils';
@@ -39,7 +39,7 @@ export class EventResolver {
     async getEvent(@Arg('url', () => String, { nullable: false }) url: Event['url']) {
         return await this.eventRepository.findOne({
             where: { url, published: true },
-            cache: DEV_ENV ? 0 : 10 * 60 * 1000
+            cache: DEV_ENV ? 0 : 10 * 60 * 1000,
         });
     }
 
@@ -77,7 +77,7 @@ export class EventResolver {
     ) {
         const url = uniqueSpeakingUrl(title);
         image = image ? image : undefined;
-        return await getRepository(Event).save({
+        return await this.eventRepository.save({
             title,
             url,
             description,
@@ -88,7 +88,7 @@ export class EventResolver {
             password,
             organizer,
             price,
-            published: true
+            published: true,
         });
     }
 
