@@ -5,7 +5,7 @@ import { InjectRepository } from 'typeorm-typedi-extensions';
 import { getRepository, Repository } from 'typeorm';
 import { Organizer } from '../../entities/Organizer';
 import { Location } from '../../entities/Location';
-import { uniqueSpeakingUrl } from 'utils';
+import { uniqueSpeakingUrl } from '../../utils';
 
 const DEV_ENV = true;
 
