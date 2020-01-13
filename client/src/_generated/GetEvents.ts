@@ -9,11 +9,14 @@
 export interface GetEvents_getEvents_location {
     __typename: 'Location';
     name: string | null;
+    latitude: string | null;
+    longitude: string | null;
 }
 
 export interface GetEvents_getEvents_organizer {
     __typename: 'Organizer';
     name: string;
+    email: string;
 }
 
 export interface GetEvents_getEvents {

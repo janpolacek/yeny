@@ -85,12 +85,17 @@ export const BannerUpload = () => {
                     ref={fileInputRef}
                 />
                 <label htmlFor={'image_input'} className={classes.uploadButton}>
-                    <Button component="span" variant={'outlined'}>
+                    <Button component="span" variant={'contained'}>
                         {imageSrc ? 'Change' : 'Upload'}
                     </Button>
                 </label>
                 {imageSrc && (
-                    <Button component="span" className={classes.clearButton} variant={'outlined'} onClick={handleClear}>
+                    <Button
+                        component="span"
+                        className={classes.clearButton}
+                        variant={'contained'}
+                        onClick={handleClear}
+                    >
                         Remove
                     </Button>
                 )}

@@ -20,6 +20,8 @@ import { useAutocomplete } from '@material-ui/lab';
 import placeholderWhite from 'assets/placeholder_white.png';
 import * as colors from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
+import { shortenText } from '../utils';
+import { EventItemSmall } from './events/EventItemSmall';
 
 const useStyles = makeStyles(theme => ({
     searchRoot: {
@@ -64,46 +66,28 @@ const useStyles = makeStyles(theme => ({
         '&:focus': {
             width: 360,
         },
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            '&:focus': {
+                width: '100%',
+            },
+        },
     },
     popper: {
         marginTop: theme.spacing(1),
+        zIndex: 1000,
     },
     searchResults: {
         width: 424,
         maxHeight: 320,
+
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+        },
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
         overflowY: 'auto',
-    },
-    searchItem: {
-        display: 'flex',
-        flexShrink: 0,
-        borderRadius: 0,
-        '&[data-focus="true"]': {
-            backgroundColor: theme.palette.grey['200'],
-        },
-        padding: theme.spacing(2),
-    },
-    searchItemContent: {
-        padding: 0,
-        '&:last-child': {
-            paddingBottom: 0,
-        },
-    },
-    searchItemCover: {
-        flexShrink: 0,
-        height: 70,
-        width: 140,
-        border: `1px solid ${colors.grey['300']}`,
-        marginRight: theme.spacing(2),
-    },
-    searchItemTitle: {
-        textTransform: 'capitalize',
-    },
-    searchItemDescription: {
-        textTransform: 'capitalize',
-        color: colors.grey['800'],
     },
 }));
 
@@ -115,6 +99,7 @@ export const Search = () => {
         variables: { query },
     });
     const history = useHistory();
+
     const handleQueryChange = (value: string) => {
         setQuery(value.trim());
     };
@@ -165,31 +150,14 @@ export const Search = () => {
             >
                 <Paper {...getListboxProps()} square={true} className={classes.searchResults} elevation={8}>
                     {data?.fullSearch?.map((option: FullSearch_fullSearch, index) => (
-                        <SearchItemResult
+                        <EventItemSmall
                             result={option}
-                            optionProps={getOptionProps({ option, index })}
+                            cardProps={getOptionProps({ option, index })}
                             key={option.url}
                         />
                     ))}
                 </Paper>
             </Popper>
         </div>
-    );
-};
-
-const SearchItemResult: React.FC<{ result: FullSearch_fullSearch; optionProps: {} }> = ({ result, optionProps }) => {
-    const classes = useStyles();
-    return (
-        <Card {...optionProps} className={classes.searchItem}>
-            <CardMedia className={classes.searchItemCover} image={result.image ?? placeholderWhite} />
-            <CardContent className={classes.searchItemContent}>
-                <Typography variant={'body1'} className={classes.searchItemTitle}>
-                    {result.title}
-                </Typography>
-                <Typography variant={'body2'} className={classes.searchItemDescription}>
-                    {result.description.length > 50 ? `${result.description.slice(0, 50)} ...` : result.description}
-                </Typography>
-            </CardContent>
-        </Card>
     );
 };

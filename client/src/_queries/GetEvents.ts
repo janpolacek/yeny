@@ -11,10 +11,13 @@ export const GET_EVENTS = gql`
             dateFrom
             dateTo
             location {
+                longitude
+                latitude
                 name
             }
             organizer {
                 name
+                email
             }
         }
     }

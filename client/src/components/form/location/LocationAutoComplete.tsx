@@ -12,19 +12,20 @@ import { makeStyles } from '@material-ui/core';
 import { LocationInput } from '_generated/globalTypes';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import * as colors from '@material-ui/core/colors';
+import { locationToLatLngTuple } from '../../../utils';
 
 const useStyles = makeStyles(theme => ({
     listbox: {
         '&.MuiAutocomplete-listbox': {
-            maxHeight: '200px'
-        }
+            maxHeight: '200px',
+        },
     },
     legend: {
         display: 'flex',
         alignItems: 'center',
         marginTop: theme.spacing(1),
-        color: colors.grey['800']
-    }
+        color: colors.grey['800'],
+    },
 }));
 
 const fetchLocationDebounced = throttle(async (query: string) => {
@@ -47,7 +48,7 @@ const useOsmAutoComplete = () => {
 
     const onInputChange = (event: React.ChangeEvent<{}>, value: any, reason: 'input' | 'reset') => {
         setLocation({
-            name: value
+            name: value,
         });
     };
 
@@ -77,7 +78,7 @@ const useOsmAutoComplete = () => {
             setLocation({
                 name: nominatim.display_name,
                 latitude: nominatim.lat,
-                longitude: nominatim.lon
+                longitude: nominatim.lon,
             });
         }
     }, [options, location.name, setLocation]);
@@ -90,17 +91,14 @@ export const LocationAutoComplete = () => {
     const { location, options, onInputChange } = useOsmAutoComplete();
 
     const loading = location?.name?.length !== 0 && options === undefined;
-    const position =
-        location.latitude && location.longitude
-            ? ([Number(location.latitude), Number(location.longitude)] as LatLngTuple)
-            : undefined;
+    const position = location.latitude && location.longitude ? locationToLatLngTuple(location) : undefined;
 
     return (
         <>
             <Autocomplete
                 id="location"
                 classes={{
-                    listbox: classes.listbox
+                    listbox: classes.listbox,
                 }}
                 getOptionLabel={(option: NominatimPlace | string) =>
                     typeof option === 'string' ? option : option.display_name

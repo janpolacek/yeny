@@ -27,9 +27,14 @@ const useStyles = makeStyles(theme => ({
         },
     },
     addNewButton: {
-        marginRight: theme.spacing(1),
         marginLeft: theme.spacing(4),
-        padding: theme.spacing(1),
+        marginRight: theme.spacing(1),
+
+        [theme.breakpoints.down('sm')]: {
+            marginRight: theme.spacing(0),
+            marginLeft: theme.spacing(2),
+        },
+        flexShrink: 0,
     },
 }));
 

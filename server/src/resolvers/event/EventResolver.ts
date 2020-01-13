@@ -25,7 +25,7 @@ export class EventResolver {
         return await this.eventRepository
             .createQueryBuilder('event')
             .leftJoinAndSelect('event.organizer', 'organizer')
-            .leftJoinAndSelect('event.organizer', 'location')
+            .leftJoinAndSelect('event.location', 'location')
             .where('event.dateTo >= :now', { now: new Date() })
             .where('event.published = true')
             .orderBy('event.dateFrom', 'ASC')
