@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { DateTimePicker } from 'components/form/DateTimePicker';
 import { endOfTomorrow, startOfTomorrow } from 'date-fns';
@@ -43,7 +43,14 @@ export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createE
     afterSubmit,
 }) => {
     const [submitData, { data }] = useMutation<CreateEvent, CreateEventVariables>(CREATE_EVENT_MUTATION, {});
+    const [submitting, setSubmitting] = useState(false);
     const handleSubmit = async (values: CreateEventFormValues) => {
+        if (submitting) {
+            return;
+        }
+
+        setSubmitting(true);
+
         let image = null;
 
         if (values.image) {
@@ -69,6 +76,7 @@ export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createE
         if (data?.createEvent) {
             afterSubmit(data.createEvent);
         }
+        setSubmitting(false);
     }, [data, afterSubmit]);
 
     return (

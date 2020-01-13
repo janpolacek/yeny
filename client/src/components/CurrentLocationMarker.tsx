@@ -1,4 +1,4 @@
-import { icon, Icon, LatLngTuple } from 'leaflet';
+import { icon, LatLngTuple } from 'leaflet';
 import { Marker, Popup } from 'react-leaflet';
 import React, { useEffect, useState } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';

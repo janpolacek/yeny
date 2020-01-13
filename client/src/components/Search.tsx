@@ -1,15 +1,4 @@
-import {
-    Card,
-    CardContent,
-    CardMedia,
-    CircularProgress,
-    fade,
-    InputBase,
-    makeStyles,
-    Paper,
-    Popper,
-    Typography,
-} from '@material-ui/core';
+import { CircularProgress, fade, InputBase, makeStyles, Paper, Popper } from '@material-ui/core';
 import * as React from 'react';
 import { useRef, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
@@ -17,10 +6,7 @@ import { FullSearch, FullSearch_fullSearch, FullSearchVariables } from '_generat
 import { FULLSEARCH_EVENTS } from '_queries/Fullsearch';
 import SearchIcon from '@material-ui/icons/Search';
 import { useAutocomplete } from '@material-ui/lab';
-import placeholderWhite from 'assets/placeholder_white.png';
-import * as colors from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
-import { shortenText } from '../utils';
 import { EventItemSmall } from './events/EventItemSmall';
 
 const useStyles = makeStyles(theme => ({
@@ -100,7 +86,7 @@ export const Search = () => {
     });
     const history = useHistory();
 
-    const handleQueryChange = (value: string) => {
+    const handleQueryChange = (value: string = '') => {
         setQuery(value.trim());
     };
 
@@ -109,7 +95,7 @@ export const Search = () => {
         options: data?.fullSearch ?? [],
         value: query,
         onChange: (event, value: FullSearch_fullSearch) => {
-            handleQueryChange(value.title);
+            handleQueryChange(value?.title);
             history.push(`/event/${value.url}`);
             (event.target as HTMLInputElement).blur();
         },

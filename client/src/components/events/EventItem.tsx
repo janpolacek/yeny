@@ -3,7 +3,7 @@ import * as colors from '@material-ui/core/colors';
 import { GetEvents_getEvents } from '_generated/GetEvents';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
-import { formatDate } from 'utils';
+import { formatDate, shortenText } from 'utils';
 import { Skeleton } from '@material-ui/lab';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import placeholderWhite from 'assets/placeholder_white.png';
@@ -81,7 +81,7 @@ export const EventItem = ({ event }: { event: GetEvents_getEvents }) => {
                     <Typography variant={'body1'} className={classes.location}>
                         {event.location?.name && (
                             <>
-                                <LocationOnIcon fontSize={'small'} /> {event.location.name}
+                                <LocationOnIcon fontSize={'small'} /> {shortenText(event.location.name, 20)}
                                 <span className={classes.delimiter}>|</span>
                             </>
                         )}

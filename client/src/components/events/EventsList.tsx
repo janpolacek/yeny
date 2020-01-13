@@ -1,7 +1,7 @@
 import React from 'react';
 import { GetEvents_getEvents } from '_generated/GetEvents';
 import { EventItem, EventItemSkeleton } from 'components/events/EventItem';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import * as colors from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({

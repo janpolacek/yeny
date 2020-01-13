@@ -4,7 +4,6 @@ import { throttle } from 'lodash-es';
 import axios from 'axios';
 import { NominatimPlace, NominatimPlaceOptions } from '_types/NominatimPlace';
 import { LocationMap } from 'components/form/location/LocationMap';
-import { LatLngTuple } from 'leaflet';
 import { LocationDialogNameInput } from 'components/form/location/LocationNameInput';
 import { useFormikContext } from 'formik';
 import { LocationForm } from '_types/LocationForm';

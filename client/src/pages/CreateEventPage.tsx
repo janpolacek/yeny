@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { CreateEventForm } from 'components/form/CreateEventForm';
 import { CreateEvent_createEvent } from '_generated/CreateEvent';
@@ -10,14 +10,13 @@ const useStyles = makeStyles(theme => ({
 export const CreateEventPage = () => {
     const classes = useStyles();
     const [createdEvent, setCreatedEvent] = useState<CreateEvent_createEvent>();
+    const afterSubmit = useCallback((event: CreateEvent_createEvent) => {
+        setCreatedEvent(event);
+    }, []);
     return (
         <div className={classes.root}>
             {!createdEvent ? (
-                <CreateEventForm
-                    afterSubmit={event => {
-                        setCreatedEvent(event);
-                    }}
-                />
+                <CreateEventForm afterSubmit={afterSubmit} />
             ) : (
                 <CreateEventSuccess event={createdEvent} />
             )}

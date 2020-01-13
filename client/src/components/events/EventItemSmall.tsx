@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FullSearch_fullSearch } from '../../_generated/FullSearch';
-import { Card, CardContent, CardMedia, fade, makeStyles, Typography } from '@material-ui/core';
-import placeholderWhite from '../../assets/placeholder_white.png';
-import { shortenText } from '../../utils';
+import { Card, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core';
+import placeholderWhite from 'assets/placeholder_white.png';
+import { shortenText } from 'utils';
 import * as colors from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({

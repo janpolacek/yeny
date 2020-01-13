@@ -1,9 +1,9 @@
-import { Map, Marker, TileLayer } from 'react-leaflet';
+import { Map, TileLayer } from 'react-leaflet';
 import { makeStyles, Typography } from '@material-ui/core';
 import L, { LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { GetEvents_getEvents } from '_generated/GetEvents';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { calcDistance, calcZoomLevel, locationToLatLngTuple } from 'utils';
 import { EventMapMarker } from 'components/events/EventMapMarker';
 import { useHistory } from 'react-router-dom';

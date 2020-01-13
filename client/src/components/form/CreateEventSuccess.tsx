@@ -50,6 +50,7 @@ export const CreateEventSuccess: React.FC<{ event: CreateEvent_createEvent }> = 
                 <Button
                     variant={'contained'}
                     size={'large'}
+                    type={'button'}
                     className={classes.continueButton}
                     onClick={() => history.push('/')}
                     endIcon={<ChevronRightSharpIcon />}

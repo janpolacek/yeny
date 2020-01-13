@@ -26,6 +26,7 @@ export const LocationFormDialog: React.FC<{
             open={open}
             fullWidth={true}
             maxWidth={'sm'}
+            keepMounted={false}
         >
             <Formik<LocationForm> initialValues={location} onSubmit={handleSubmit}>
                 <Form>

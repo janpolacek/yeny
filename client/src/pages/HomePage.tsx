@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 import { EventsMap } from '../components/events/EventsMap';
 
 export const HomePage = () => {
-    const { loading, error, data } = useQuery<GetEvents, GetEventsVariables>(GET_EVENTS, { variables: {} });
+    const { loading, error, data } = useQuery<GetEvents, GetEventsVariables>(GET_EVENTS, { variables: { take: 100 } });
 
     if (error) {
         return <div>ERROR</div>;
