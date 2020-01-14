@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/yeny</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="postgres@yeny-dev-pg.postgres.database.azure.com" uuid="d24e4584-b4a9-4744-b6b6-585e259c1132">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://yeny-dev-pg.postgres.database.azure.com:5432/postgres</jdbc-url>
+    </data-source>
   </component>
 </project>
