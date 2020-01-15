@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "scripts": {
         "start-dev": "ts-node-dev --respawn -T src/index.ts",
-        "start": "ts-nodesrc/index.ts"
+        "start": "ts-node src/index.ts"
     },
     "dependencies": {
         "apollo-server": "^2.9.16",
