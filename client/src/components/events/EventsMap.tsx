@@ -1,6 +1,7 @@
 import { Map, TileLayer } from 'react-leaflet';
-import { makeStyles, Typography } from '@material-ui/core';
-import L, { LatLngTuple } from 'leaflet';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import { LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { GetEvents_getEvents } from '_generated/GetEvents';
 import React from 'react';
@@ -9,15 +10,6 @@ import { EventMapMarker } from 'components/events/EventMapMarker';
 import { useHistory } from 'react-router-dom';
 import { EventItemSmall } from './EventItemSmall';
 import { CurrentLocationMarker, useCurrentPosition } from '../CurrentLocationMarker';
-
-// @ts-ignore
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-});
 
 const useStyles = makeStyles(theme => {
     return {
@@ -70,19 +62,18 @@ export const EventsMap: React.FC<{ events: GetEvents_getEvents[] }> = ({ events 
                     Events closest to you
                 </Typography>
                 <div>
-                    {eventsWithLocation.slice(0, 4).map(event => {
-                        return (
-                            <EventItemSmall
-                                result={event}
-                                cardProps={{
-                                    elevation: 0,
-                                    onClick: () => {
-                                        history.push(`/event/${event.url}`);
-                                    },
-                                }}
-                            />
-                        );
-                    })}
+                    {eventsWithLocation.slice(0, 4).map(event => (
+                        <EventItemSmall
+                            key={event.url}
+                            result={event}
+                            cardProps={{
+                                elevation: 0,
+                                onClick: () => {
+                                    history.push(`/event/${event.url}`);
+                                },
+                            }}
+                        />
+                    ))}
                 </div>
             </div>
         </>

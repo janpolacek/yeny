@@ -1,6 +1,10 @@
 import { CreateEvent_createEvent } from '_generated/CreateEvent';
 import React from 'react';
-import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ChevronRightSharpIcon from '@material-ui/icons/ChevronRightSharp';
 import * as colors from '@material-ui/core/colors';

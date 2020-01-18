@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { FullSearch_fullSearch } from '../../_generated/FullSearch';
-import { Card, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import placeholderWhite from 'assets/placeholder_white.png';
 import { shortenText } from 'utils';
 import * as colors from '@material-ui/core/colors';

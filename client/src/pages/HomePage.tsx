@@ -3,7 +3,7 @@ import { EventsList, EventsListLoader } from 'components/events/EventsList';
 import { useQuery } from '@apollo/react-hooks';
 import { GetEvents, GetEventsVariables } from '../_generated/GetEvents';
 import { GET_EVENTS } from '../_queries/GetEvents';
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import { EventsMap } from '../components/events/EventsMap';
 
 export const HomePage = () => {

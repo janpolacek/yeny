@@ -1,12 +1,13 @@
-import { Container, makeStyles } from '@material-ui/core';
 import * as React from 'react';
 import { useScrollTop } from 'utils';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
     container: {
         marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(4)
-    }
+        marginBottom: theme.spacing(4),
+    },
 }));
 
 export const PageContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {

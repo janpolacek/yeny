@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import React, { useCallback, useState } from 'react';
 import { LocationFormDialog } from 'components/form/location/LocationFormDialog';
 import { useCreateEventFormikContext } from 'components/form/useCreateEventFormikContext';
@@ -8,7 +8,7 @@ import { LocationFormNameInput } from 'components/form/location/LocationNameInpu
 const useCreateEventFormLocationvalue = () => {
     const {
         values: { location },
-        setFieldValue
+        setFieldValue,
     } = useCreateEventFormikContext();
 
     const setLocation = useCallback((value: LocationForm) => setFieldValue('location', value), [setFieldValue]);

@@ -1,4 +1,3 @@
-import { CircularProgress, fade, InputBase, makeStyles, Paper, Popper } from '@material-ui/core';
 import * as React from 'react';
 import { useRef, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
@@ -8,6 +7,12 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useAutocomplete } from '@material-ui/lab';
 import { useHistory } from 'react-router-dom';
 import { EventItemSmall } from './events/EventItemSmall';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const useStyles = makeStyles(theme => ({
     searchRoot: {

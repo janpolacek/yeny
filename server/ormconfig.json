@@ -1,8 +1,7 @@
 {
-    "host": "yeny-dev-pg.postgres.database.azure.com",
+    "host": "localhost",
     "port": 5432,
     "database": "yeny",
-    "username": "yeny@yeny-dev-pg",
-    "password": "V@KWb9fr6QGN3MMW",
-    "ssl": true
+    "username": "yeny",
+    "password": "qwerty123"
 }

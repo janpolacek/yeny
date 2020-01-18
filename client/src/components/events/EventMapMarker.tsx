@@ -1,12 +1,17 @@
-import { Card, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import * as colors from '@material-ui/core/colors';
 import React from 'react';
-import { GetEvents_getEvents } from '../../_generated/GetEvents';
+import { GetEvents_getEvents } from '_generated/GetEvents';
 import { useHistory } from 'react-router-dom';
-import placeholderWhite from '../../assets/placeholder_white.png';
-import { locationToLatLngTuple, shortenText } from '../../utils';
-import { Marker, Popup } from 'react-leaflet';
+import placeholderWhite from 'assets/placeholder_white.png';
+import { locationToLatLngTuple, shortenText } from 'utils';
+import { Popup } from 'react-leaflet';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { DefaultMarker } from '../DefaultMarket';
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -52,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 
     cover: {
         flexShrink: 0,
-        height: 50,
+        height: 100,
         width: 100,
         border: `1px solid ${colors.grey['300']}`,
         marginRight: theme.spacing(2),
@@ -61,6 +66,9 @@ const useStyles = makeStyles(theme => ({
         '& .leaflet-popup-content': {
             margin: theme.spacing(1, 2, 1, 1),
         },
+    },
+    redIcon: {
+        filter: 'hue-rotate(-215deg) saturate(1.1)',
     },
 }));
 
@@ -75,7 +83,7 @@ export const EventMapMarker: React.FC<{ event: GetEvents_getEvents }> = ({ event
     const position = locationToLatLngTuple(event.location);
 
     return (
-        <Marker position={position}>
+        <DefaultMarker position={position} className={classes.redIcon}>
             <Popup className={classes.popup}>
                 <Card onClick={handleClick} className={`${classes.card}`} elevation={0}>
                     <CardMedia className={classes.cover} image={event.image ?? placeholderWhite} title={event.title} />
@@ -99,6 +107,6 @@ export const EventMapMarker: React.FC<{ event: GetEvents_getEvents }> = ({ event
                     </div>
                 </Card>
             </Popup>
-        </Marker>
+        </DefaultMarker>
     );
 };

@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Button, Grid, makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
 import { useCreateEventFormikContext } from 'components/form/useCreateEventFormikContext';
 import axios from 'axios';
 import { ImgurResponse } from '_types/Imgur';

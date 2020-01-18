@@ -1,18 +1,9 @@
 import React from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import { makeStyles } from '@material-ui/core';
-import L, { LatLngTuple } from 'leaflet';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import { LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { CurrentLocationMarker, useCurrentPosition } from '../../CurrentLocationMarker';
-
-// @ts-ignore
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-});
+import { CurrentLocationMarker, useCurrentPosition } from 'components/CurrentLocationMarker';
 
 const useStyles = makeStyles(theme => {
     return {

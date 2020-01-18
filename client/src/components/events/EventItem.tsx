@@ -1,4 +1,7 @@
-import { Card, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 import * as colors from '@material-ui/core/colors';
 import { GetEvents_getEvents } from '_generated/GetEvents';
 import { useHistory } from 'react-router-dom';
@@ -7,6 +10,7 @@ import { formatDate, shortenText } from 'utils';
 import { Skeleton } from '@material-ui/lab';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import placeholderWhite from 'assets/placeholder_white.png';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useEventListStyles = makeStyles(theme => ({
     card: {

@@ -1,7 +1,11 @@
 import { useCreateEventFormikContext } from 'components/form/useCreateEventFormikContext';
 import React, { useState } from 'react';
-import { Grid, IconButton, InputAdornment, TextField } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { FormSubTitle, FormTitle } from 'components/form/FormTitle';
 
 export const Password = () => {
@@ -27,7 +31,7 @@ export const Password = () => {
                                     {showPassword ? <Visibility /> : <VisibilityOff />}
                                 </IconButton>
                             </InputAdornment>
-                        )
+                        ),
                     }}
                     fullWidth
                 />

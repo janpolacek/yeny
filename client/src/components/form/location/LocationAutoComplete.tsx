@@ -7,7 +7,7 @@ import { LocationMap } from 'components/form/location/LocationMap';
 import { LocationDialogNameInput } from 'components/form/location/LocationNameInput';
 import { useFormikContext } from 'formik';
 import { LocationForm } from '_types/LocationForm';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { LocationInput } from '_generated/globalTypes';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import * as colors from '@material-ui/core/colors';

@@ -1,9 +1,14 @@
-import { AppBar, Button, fade, Link, makeStyles, Toolbar } from '@material-ui/core';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/logo.svg';
 import * as colors from '@material-ui/core/colors';
 import { Search } from './Search';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const useStyles = makeStyles(theme => ({
     root: {

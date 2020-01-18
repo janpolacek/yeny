@@ -1,9 +1,11 @@
 import React from 'react';
 import { RenderInputParams } from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { CircularProgress, IconButton, InputAdornment } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { LocationForm } from '_types/LocationForm';
-import { AddLocation as AddLocationIcon } from '@material-ui/icons';
+import AddLocationIcon from '@material-ui/icons/AddLocation';
 
 export const LocationDialogNameInput: React.FC<{
     params: RenderInputParams;
@@ -22,7 +24,7 @@ export const LocationDialogNameInput: React.FC<{
                         {loading ? <CircularProgress color="inherit" size={20} /> : null}
                         {params.InputProps.endAdornment}
                     </React.Fragment>
-                )
+                ),
             }}
         />
     );
@@ -51,7 +53,7 @@ export const LocationFormNameInput: React.FC<{
                             <AddLocationIcon />
                         </IconButton>
                     </InputAdornment>
-                )
+                ),
             }}
         />
     );
