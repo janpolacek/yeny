@@ -4,26 +4,15 @@ import { Container } from 'typedi';
 import * as TypeORM from 'typeorm';
 import * as TypeGraphQL from 'type-graphql';
 import { seedDatabase } from './seedDatabase';
-import dbConfig from '../ormconfig.json';
+import dbConfig from '../ormconfig.js';
+import { ConnectionOptions } from 'typeorm';
 
 TypeORM.useContainer(Container);
 
 async function bootstrap() {
-    await TypeORM.createConnection({
-        ...dbConfig,
-        type: 'postgres',
-        entities: [__dirname + '/entities/**/*.ts'],
-        migrations: [__dirname + '/migrations/**/*.ts'],
-        subscribers: [__dirname + '/subscribers/**/*.ts'],
-        logging: true,
-        cli: {
-            entitiesDir: __dirname + '/entities',
-            migrationsDir: __dirname + '/migrations',
-            subscribersDir: __dirname + '/subscribers',
-        },
-        dropSchema: true,
-        synchronize: true,
-    }).then(async connection => await connection.runMigrations());
+    await TypeORM.createConnection(dbConfig as ConnectionOptions).then(
+        async connection => await connection.runMigrations()
+    );
 
     await seedDatabase();
     const schema = await TypeGraphQL.buildSchema({
