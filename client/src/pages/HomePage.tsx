@@ -21,7 +21,7 @@ export const HomePage = () => {
             <Grid item xs={12} md={8}>
                 <EventsList events={data.getEvents} />
             </Grid>
-            <Grid item xs={false} md={4}>
+            <Grid item xs={false} sm={false} md={4}>
                 <EventsMap events={data.getEvents} />
             </Grid>
         </Grid>

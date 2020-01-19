@@ -92,7 +92,7 @@ export const EventItem = ({ event }: { event: GetEvents_getEvents }) => {
                         {event.organizer.name}
                     </Typography>
                     <Typography variant={'body2'} className={classes.description}>
-                        {event.description}
+                        {shortenText(event.description, 120)}
                     </Typography>
                 </CardContent>
             </div>

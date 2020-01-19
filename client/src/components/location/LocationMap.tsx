@@ -1,9 +1,10 @@
 import React from 'react';
-import { Map, Marker, TileLayer } from 'react-leaflet';
+import { Map, TileLayer } from 'react-leaflet';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { CurrentLocationMarker, useCurrentPosition } from 'components/CurrentLocationMarker';
+import { DefaultMarker } from '../DefaultMarket';
 
 const useStyles = makeStyles(theme => {
     return {
@@ -28,7 +29,7 @@ export const LocationMap: React.FC<{ position?: LatLngTuple }> = ({ position }) 
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
-            {position && <Marker position={position} />}
+            {position && <DefaultMarker position={position} />}
             <CurrentLocationMarker location={currentPosition} />
         </Map>
     );

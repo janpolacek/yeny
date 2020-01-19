@@ -11,6 +11,10 @@ export function formatDate(date: any) {
     return format(new Date(date), DATE_FORMAT);
 }
 
+export function formatDateAndTime(date: any) {
+    return format(new Date(date), DATE_TIME_FORMAT);
+}
+
 export function formatPrice(price: number | null) {
     if (price == null) {
         return '';

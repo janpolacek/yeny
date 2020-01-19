@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LocationAutoComplete } from 'components/form/location/LocationAutoComplete';
+import { LocationAutoComplete } from 'components/location/LocationAutoComplete';
 import { LocationForm } from '_types/LocationForm';
 import { Form, Formik } from 'formik';
 import { LocationInput } from '_generated/globalTypes';

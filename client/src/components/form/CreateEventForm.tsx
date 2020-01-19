@@ -15,8 +15,12 @@ import { CREATE_EVENT_MUTATION } from '_queries/CreateEvent';
 import { generatedCreateEventData } from 'components/form/fixtures/fakeEvent';
 import { FormTitle } from 'components/form/FormTitle';
 import { Password } from 'components/form/Password';
-import { LocationField } from 'components/form/location/LocationField';
+import { LocationField } from 'components/location/LocationField';
 import { Prompt } from 'react-router-dom';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import * as colors from '@material-ui/core/colors';
+import { fade } from '@material-ui/core';
+import ChevronRightSharpIcon from '@material-ui/icons/ChevronRightSharp';
 
 const DEV_ENV = true;
 
@@ -40,6 +44,21 @@ const initialValues = DEV_ENV
           password: '',
           price: null,
       };
+
+const useStyles = makeStyles(theme => ({
+    description: {
+        margin: theme.spacing(2, 0),
+    },
+    submitButton: {
+        borderColor: colors.green.A700,
+        backgroundColor: colors.green.A700,
+        margin: theme.spacing(2, 0),
+        '&:hover': {
+            borderColor: fade(colors.green.A700, 0.8),
+            backgroundColor: fade(colors.green.A700, 0.8),
+        },
+    },
+}));
 
 export const CreateEventForm: React.FC<{ afterSubmit: (data: CreateEvent_createEvent) => void }> = ({
     afterSubmit,
@@ -95,7 +114,7 @@ const FormikContent = () => {
         <>
             <Prompt when={dirty} message="Are you sure you want to leave?" />
             <Form>
-                <Grid container spacing={2}>
+                <Grid container>
                     <EventOrganizer />
                     <EventDetails />
                     <Password />
@@ -128,6 +147,7 @@ const EventOrganizer = () => {
 };
 
 const EventDetails = () => {
+    const classes = useStyles();
     const { getFieldProps } = useCreateEventFormikContext();
 
     return (
@@ -150,9 +170,10 @@ const EventDetails = () => {
                     rows={4}
                     fullWidth
                     required
+                    className={classes.description}
                 />
             </Grid>
-            <Grid container item spacing={2}>
+            <Grid container item>
                 <Grid item xs={12} sm={6}>
                     <DateTimePicker name="dateFrom" label="Date from" />
                 </Grid>
@@ -168,9 +189,18 @@ const EventDetails = () => {
 };
 
 const Submit = () => {
+    const classes = useStyles();
     const { submitForm } = useCreateEventFormikContext();
+
     return (
-        <Button type={'submit'} variant={'outlined'} onClick={submitForm}>
+        <Button
+            type={'submit'}
+            size={'large'}
+            variant={'contained'}
+            className={classes.submitButton}
+            endIcon={<ChevronRightSharpIcon />}
+            onClick={submitForm}
+        >
             Create event
         </Button>
     );

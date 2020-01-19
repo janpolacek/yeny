@@ -1,15 +1,17 @@
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Map, TileLayer } from 'react-leaflet';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { LatLngTuple } from 'leaflet';
+import 'react-leaflet-markercluster/dist/styles.min.css'; // inside .js file
+import MarkerClusterGroup from 'react-leaflet-markercluster';
+import { CurrentLocationMarker, useCurrentPosition } from '../CurrentLocationMarker';
 import 'leaflet/dist/leaflet.css';
 import { GetEvents_getEvents } from '_generated/GetEvents';
-import React from 'react';
 import { calcDistance, calcZoomLevel, locationToLatLngTuple } from 'utils';
 import { EventMapMarker } from 'components/events/EventMapMarker';
-import { useHistory } from 'react-router-dom';
 import { EventItemSmall } from './EventItemSmall';
-import { CurrentLocationMarker, useCurrentPosition } from '../CurrentLocationMarker';
 
 const useStyles = makeStyles(theme => {
     return {
@@ -47,14 +49,16 @@ export const EventsMap: React.FC<{ events: GetEvents_getEvents[] }> = ({ events 
 
     return (
         <>
-            <Map center={center} zoom={zoom} className={classes.map}>
+            <Map center={center} zoom={zoom} className={classes.map} maxZoom={20}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
-                {eventsWithLocation.map(event => (
-                    <EventMapMarker event={event} key={event.url} />
-                ))}
+                <MarkerClusterGroup>
+                    {eventsWithLocation.map(event => (
+                        <EventMapMarker event={event} key={event.url} />
+                    ))}
+                </MarkerClusterGroup>
                 <CurrentLocationMarker location={currentPosition} />
             </Map>
             <div>

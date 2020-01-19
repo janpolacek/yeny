@@ -9,6 +9,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ChevronRightSharpIcon from '@material-ui/icons/ChevronRightSharp';
 import * as colors from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
+import { fade } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -29,6 +30,13 @@ const useStyles = makeStyles(theme => ({
     },
     continueButton: {
         marginTop: theme.spacing(4),
+        borderColor: colors.green.A700,
+        backgroundColor: colors.green.A700,
+        margin: theme.spacing(2, 0),
+        '&:hover': {
+            borderColor: fade(colors.green.A700, 0.8),
+            backgroundColor: fade(colors.green.A700, 0.8),
+        },
     },
 }));
 

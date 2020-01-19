@@ -5,7 +5,7 @@ import markerRetinaIcon from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import { icon, LatLngTuple } from 'leaflet';
 
-export const DefaultMarker: React.FC<{ className?: string; position: LatLngTuple; children: React.ReactNode }> = ({
+export const DefaultMarker: React.FC<{ className?: string; position: LatLngTuple; children?: React.ReactNode }> = ({
     className,
     position,
     children,

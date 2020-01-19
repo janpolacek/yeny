@@ -21,6 +21,7 @@ async function bootstrap() {
             migrationsDir: __dirname + '/migrations',
             subscribersDir: __dirname + '/subscribers',
         },
+        dropSchema: true,
         synchronize: true,
     }).then(async connection => await connection.runMigrations());
 

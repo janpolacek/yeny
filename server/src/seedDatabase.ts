@@ -3,7 +3,7 @@ import { Event } from './entities/Event';
 import * as faker from 'faker';
 import { Organizer } from './entities/Organizer';
 import { uniqueSpeakingUrl } from './utils';
-import { addDays } from 'date-fns';
+import { addMinutes } from 'date-fns';
 const DEV_ENV = true;
 function fakeOrganizer(): Partial<Organizer> {
     return {
@@ -16,7 +16,7 @@ function randomPicsumImage() {
     return `https://picsum.photos/640/480/?random=${Math.floor(Math.random() * 1000)}`;
 }
 
-function genRand(min: number, max: number) {
+function genRand(min: number = 0, max: number = 10) {
     const rand = Math.random() * (max - min) + min;
     const power = Math.pow(10, 7);
     return Math.floor(rand * power) / power;
@@ -25,12 +25,11 @@ function genRand(min: number, max: number) {
 function fakeEvent(fakeOrganizer: Partial<Organizer>) {
     const title = faker.random.words();
     const dateFrom = faker.date.future();
-    const dateTo = addDays(dateFrom, 5);
-
+    const dateTo = addMinutes(dateFrom, Math.floor(genRand(100, 5 * 24 * 60)));
     return {
         title: title,
         url: uniqueSpeakingUrl(title),
-        description: faker.lorem.paragraph(),
+        description: faker.lorem.paragraph(10),
         password: 'password',
         dateFrom: dateFrom,
         dateTo: dateTo,
@@ -39,7 +38,7 @@ function fakeEvent(fakeOrganizer: Partial<Organizer>) {
         price: Number(faker.commerce.price(0, 10)),
         location: {
             latitude: String(genRand(47, 49)),
-            longitude: String(genRand(17, 19)),
+            longitude: String(genRand(17, 22)),
             name: faker.address.city(),
         },
         published: DEV_ENV,

@@ -3,27 +3,19 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { throttle } from 'lodash-es';
 import axios from 'axios';
 import { NominatimPlace, NominatimPlaceOptions } from '_types/NominatimPlace';
-import { LocationMap } from 'components/form/location/LocationMap';
-import { LocationDialogNameInput } from 'components/form/location/LocationNameInput';
+import { LocationMap } from 'components/location/LocationMap';
+import { LocationDialogNameInput } from 'components/location/LocationNameInput';
 import { useFormikContext } from 'formik';
 import { LocationForm } from '_types/LocationForm';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { LocationInput } from '_generated/globalTypes';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import * as colors from '@material-ui/core/colors';
-import { locationToLatLngTuple } from '../../../utils';
+import { locationToLatLngTuple } from '../../utils';
+import { LocationInfo } from './LocationInfo';
 
 const useStyles = makeStyles(theme => ({
     listbox: {
         '&.MuiAutocomplete-listbox': {
             maxHeight: '200px',
         },
-    },
-    legend: {
-        display: 'flex',
-        alignItems: 'center',
-        marginTop: theme.spacing(1),
-        color: colors.grey['800'],
     },
 }));
 
@@ -119,22 +111,5 @@ export const LocationAutoComplete = () => {
             <LocationMap position={position} />
             <LocationInfo location={location} />
         </>
-    );
-};
-
-const LocationInfo: React.FC<{ location?: Partial<LocationInput> }> = ({ location }) => {
-    const classes = useStyles();
-
-    if (!location || !location?.latitude || !location.longitude) {
-        return null;
-    }
-
-    return (
-        <div className={classes.legend}>
-            <LocationOnIcon />
-            <span>
-                Location: {location.latitude}, {location.longitude}
-            </span>
-        </div>
     );
 };

@@ -56,7 +56,7 @@ export const Header = () => {
     };
 
     return (
-        <AppBar position="static" elevation={0} className={classes.root}>
+        <AppBar position="fixed" elevation={0} className={classes.root}>
             <Toolbar>
                 <Link className={classes.logo}>
                     <Logo className={classes.logoIcon} onClick={handleLogoClick} />
