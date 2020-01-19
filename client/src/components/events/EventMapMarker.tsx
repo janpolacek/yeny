@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import * as colors from '@material-ui/core/colors';
 import React from 'react';
-import { GetEvents_getEvents } from '_generated/GetEvents';
+import { GetEvents_events } from '_generated/GetEvents';
 import { useHistory } from 'react-router-dom';
 import placeholderWhite from 'assets/placeholder_white.png';
 import { locationToLatLngTuple, shortenText } from 'utils';
@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export const EventMapMarker: React.FC<{ event: GetEvents_getEvents }> = ({ event }) => {
+export const EventMapMarker: React.FC<{ event: GetEvents_events }> = ({ event }) => {
     const classes = useStyles({});
 
     const history = useHistory();

@@ -1,15 +1,21 @@
-import { ArgsType, Field, InputType, Int } from 'type-graphql';
+import { ArgsType, Field, InputType, Int, ObjectType } from 'type-graphql';
 import { MaxLength, MinLength } from 'class-validator';
 import { LocationInput } from './LocationInput';
 import { OrganizerInput } from './OrganizerInput';
 
 @ArgsType()
-export class GetEventsArgs {
+export class MultipleEventsArgs {
     @Field(_type => Int, { nullable: true, defaultValue: 0 })
     skip?: number;
 
     @Field(_type => Int, { nullable: true, defaultValue: 20 })
     take?: number;
+}
+
+@ArgsType()
+export class GetByDateArgs extends MultipleEventsArgs {
+    @Field(_type => Date, { nullable: true })
+    date?: Date;
 }
 
 @InputType()
@@ -56,4 +62,10 @@ export class DeleteIventInput {
 
     @Field()
     password: string;
+}
+
+@ObjectType()
+export class Calendar {
+    @Field(() => [String], { nullable: true })
+    days?: string[];
 }

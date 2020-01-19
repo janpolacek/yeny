@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { useEffect } from 'react';
 import { LatLngTuple } from 'leaflet';
-import { GetEvents_getEvents_location } from './_generated/GetEvents';
+import { GetEvents_events_location } from './_generated/GetEvents';
 
 export const DATE_FORMAT = 'dd.MM.yyyy';
 export const TIME_FORMAT = 'HH:mm';
@@ -60,6 +60,6 @@ export const shortenText = (text: string = '', max: number) => {
     return text.length > max ? `${text.slice(0, max)}...` : text;
 };
 
-export const locationToLatLngTuple = (location: Partial<GetEvents_getEvents_location> | null): LatLngTuple => {
+export const locationToLatLngTuple = (location: Partial<GetEvents_events_location> | null): LatLngTuple => {
     return [Number(location?.latitude), Number(location?.longitude)];
 };

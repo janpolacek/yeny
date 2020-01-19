@@ -1,13 +1,12 @@
 import { Arg, Args, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Event } from '../../entities/Event';
-import { CreateEventInput, DeleteIventInput, GetEventsArgs } from './EventInput';
+import { Calendar, CreateEventInput, DeleteIventInput, GetByDateArgs } from './EventInput';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
 import { Organizer } from '../../entities/Organizer';
 import { Location } from '../../entities/Location';
-import { uniqueSpeakingUrl } from '../../utils';
-
-const DEV_ENV = true;
+import { isDevEnv, uniqueSpeakingUrl } from '../../utils';
+import { format, parse } from 'date-fns';
 
 @Resolver()
 export class EventResolver {
@@ -20,18 +19,33 @@ export class EventResolver {
         private readonly locationRepository: Repository<Location>
     ) {}
 
-    @Query(() => [Event], { nullable: true })
-    async getEvents(@Root() @Args() { skip, take }: GetEventsArgs) {
-        return await this.eventRepository
+    async getPublishedEventsQuery() {
+        return this.eventRepository
             .createQueryBuilder('event')
             .leftJoinAndSelect('event.organizer', 'organizer')
             .leftJoinAndSelect('event.location', 'location')
-            .where('event.dateTo >= :now', { now: new Date() })
-            .where('event.published = true')
+            .where('event.published = true');
+    }
+
+    @Query(() => [Event], { nullable: true })
+    async events(@Root() @Args() { skip, take, date }: GetByDateArgs) {
+        let publishedEvents = await this.getPublishedEventsQuery();
+
+        if (!date) {
+            // vsetky ktore neskoncili
+            publishedEvents = publishedEvents.where('event.dateTo >= :date', { date: new Date() });
+        } else {
+            // zaciatok ohraniceny dnom
+            publishedEvents = publishedEvents.where(`to_char(event.dateFrom, 'YYYY-MM-DD') = :date `, {
+                date: format(date, 'yyyy-MM-dd'),
+            });
+        }
+
+        return publishedEvents
             .orderBy('event.dateFrom', 'ASC')
             .skip(skip)
             .take(take)
-            .cache('eventsCache', DEV_ENV ? 0 : 2 * 60 * 1000)
+            .cache('eventsCache', isDevEnv() ? 0 : 2 * 60 * 1000)
             .getMany();
     }
 
@@ -39,16 +53,14 @@ export class EventResolver {
     async getEvent(@Arg('url', () => String, { nullable: false }) url: Event['url']) {
         return await this.eventRepository.findOne({
             where: { url, published: true },
-            cache: DEV_ENV ? 0 : 10 * 60 * 1000,
+            cache: isDevEnv() ? 0 : 10 * 60 * 1000,
         });
     }
 
     @Query(() => [Event], { nullable: true })
     async fullSearch(@Arg('query', () => String, { nullable: false }) query: string) {
-        const { raw, entities } = await this.eventRepository
-            .createQueryBuilder('event')
-            .leftJoinAndSelect('event.organizer', 'organizer')
-            .leftJoinAndSelect('event.location', 'location')
+        const publishedEventsQuery = await this.getPublishedEventsQuery();
+        const { raw, entities } = await publishedEventsQuery
             .addSelect(
                 `ts_rank_cd(
                     to_tsvector(
@@ -68,6 +80,19 @@ export class EventResolver {
         return entities.filter((e, index) => {
             return raw[index].rank > 0;
         });
+    }
+
+    @Query(() => Calendar, { nullable: true })
+    async calendar() {
+        const { raw, entities } = await this.eventRepository
+            .createQueryBuilder('event')
+            .select(`to_char(event.dateFrom, 'YYYY-MM-DD') as date`)
+            .where('event.published = true')
+            .groupBy('date')
+            .orderBy('date', 'ASC')
+            .getRawAndEntities();
+
+        return { days: raw.map(({ date }) => date) } as Calendar;
     }
 
     @Mutation(() => Event)

@@ -3,7 +3,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import * as colors from '@material-ui/core/colors';
-import { GetEvents_getEvents } from '_generated/GetEvents';
+import { GetEvents_events } from '_generated/GetEvents';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
 import { formatDate, shortenText } from 'utils';
@@ -63,7 +63,7 @@ const useEventListStyles = makeStyles(theme => ({
     },
 }));
 
-export const EventItem = ({ event }: { event: GetEvents_getEvents }) => {
+export const EventItem = ({ event }: { event: GetEvents_events }) => {
     const classes = useEventListStyles({});
     const history = useHistory();
 

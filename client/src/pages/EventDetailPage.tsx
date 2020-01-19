@@ -15,10 +15,9 @@ import { Map, TileLayer } from 'react-leaflet';
 import { DefaultMarker } from '../components/DefaultMarket';
 import { LocationInfo } from '../components/location/LocationInfo';
 import { LocationInput } from '../_generated/globalTypes';
-import { GetEvents_getEvents, GetEvents_getEvents_location } from '../_generated/GetEvents';
+import { GetEvents_events, GetEvents_events_location } from '../_generated/GetEvents';
 import Button from '@material-ui/core/Button';
 import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
-import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
@@ -186,7 +185,7 @@ const DetailTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     );
 };
 
-const DetailMap: React.FC<{ location: GetEvents_getEvents_location | null }> = ({ location }) => {
+const DetailMap: React.FC<{ location: GetEvents_events_location | null }> = ({ location }) => {
     const classes = useStyles();
 
     if (!location) {
@@ -217,7 +216,7 @@ const AddToCalendar = () => {
     );
 };
 
-const DetailOrganizerBlock: React.FC<{ event: GetEvents_getEvents }> = ({ event }) => {
+const DetailOrganizerBlock: React.FC<{ event: GetEvents_events }> = ({ event }) => {
     return (
         <DetailSubblock>
             <DetailTitle>Organizer</DetailTitle>
@@ -228,7 +227,7 @@ const DetailOrganizerBlock: React.FC<{ event: GetEvents_getEvents }> = ({ event 
     );
 };
 
-const DetailDateTimeBlock: React.FC<{ event: GetEvents_getEvents }> = ({ event }) => {
+const DetailDateTimeBlock: React.FC<{ event: GetEvents_events }> = ({ event }) => {
     return (
         <DetailSubblock>
             <DetailTitle>Date and time</DetailTitle>
@@ -240,7 +239,7 @@ const DetailDateTimeBlock: React.FC<{ event: GetEvents_getEvents }> = ({ event }
     );
 };
 
-const DetailLocationBlock: React.FC<{ event: GetEvents_getEvents }> = ({ event }) => {
+const DetailLocationBlock: React.FC<{ event: GetEvents_events }> = ({ event }) => {
     return (
         <DetailSubblock>
             <DetailTitle>Location</DetailTitle>

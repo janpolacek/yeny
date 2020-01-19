@@ -26,16 +26,31 @@ const App = () => {
             <Router>
                 <main className={classes.app}>
                     <Header />
-                    <PageContainer>
-                        <Switch>
-                            <Route path={'/create-event'} children={() => <CreateEventPage />} />
-                            <Route
-                                path={'/event/:url'}
-                                children={props => <EventDetailPage url={props.match?.params.url} />}
-                            />
-                            <Route children={() => <HomePage />} />
-                        </Switch>
-                    </PageContainer>
+                    <Switch>
+                        <Route
+                            path={'/create-event'}
+                            children={() => (
+                                <PageContainer>
+                                    <CreateEventPage />
+                                </PageContainer>
+                            )}
+                        />
+                        <Route
+                            path={'/event/:url'}
+                            children={props => (
+                                <PageContainer>
+                                    <EventDetailPage url={props.match?.params.url} />
+                                </PageContainer>
+                            )}
+                        />
+                        <Route
+                            children={() => (
+                                <PageContainer>
+                                    <HomePage />
+                                </PageContainer>
+                            )}
+                        />
+                    </Switch>
                     <Footer />
                 </main>
             </Router>

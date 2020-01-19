@@ -8,10 +8,10 @@ import 'react-leaflet-markercluster/dist/styles.min.css'; // inside .js file
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { CurrentLocationMarker, useCurrentPosition } from '../CurrentLocationMarker';
 import 'leaflet/dist/leaflet.css';
-import { GetEvents_getEvents } from '_generated/GetEvents';
 import { calcDistance, calcZoomLevel, locationToLatLngTuple } from 'utils';
 import { EventMapMarker } from 'components/events/EventMapMarker';
 import { EventItemSmall } from './EventItemSmall';
+import { GetEvents_events } from '../../_generated/GetEvents';
 
 const useStyles = makeStyles(theme => {
     return {
@@ -30,11 +30,15 @@ const useStyles = makeStyles(theme => {
 const defaultCenter: LatLngTuple = [48.1516988, 17.1093063];
 const defaultZoom = 7;
 
-export const EventsMap: React.FC<{ events: GetEvents_getEvents[] }> = ({ events }) => {
+export const EventsMap: React.FC<{ events: GetEvents_events[] | undefined | null }> = ({ events }) => {
     const classes = useStyles();
     const history = useHistory();
     const { currentPosition } = useCurrentPosition();
     const center = currentPosition ?? defaultCenter;
+
+    if (!events) {
+        events = [];
+    }
 
     const eventsWithLocation = events
         .filter(event => Boolean(event.location?.latitude && event.location?.longitude))
@@ -44,8 +48,11 @@ export const EventsMap: React.FC<{ events: GetEvents_getEvents[] }> = ({ events 
                 calcDistance(center, locationToLatLngTuple(event2.location))
         );
 
-    const minDistance = calcDistance(center, locationToLatLngTuple(eventsWithLocation[0].location));
-    const zoom = currentPosition ? calcZoomLevel(minDistance) : defaultZoom;
+    const minDistance = eventsWithLocation?.[0]
+        ? calcDistance(center, locationToLatLngTuple(eventsWithLocation[0].location))
+        : 0;
+
+    const zoom = currentPosition && minDistance ? calcZoomLevel(minDistance) : defaultZoom;
 
     return (
         <>

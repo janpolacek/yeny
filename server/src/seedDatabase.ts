@@ -4,7 +4,7 @@ import * as faker from 'faker';
 import { Organizer } from './entities/Organizer';
 import { uniqueSpeakingUrl } from './utils';
 import { addMinutes } from 'date-fns';
-const DEV_ENV = true;
+
 function fakeOrganizer(): Partial<Organizer> {
     return {
         name: `${faker.name.firstName()} ${faker.name.lastName()}`,
@@ -24,7 +24,7 @@ function genRand(min: number = 0, max: number = 10) {
 
 function fakeEvent(fakeOrganizer: Partial<Organizer>) {
     const title = faker.random.words();
-    const dateFrom = faker.date.future();
+    const dateFrom = genRand(0, 10) > 5 ? faker.date.future() : faker.date.past();
     const dateTo = addMinutes(dateFrom, Math.floor(genRand(100, 5 * 24 * 60)));
     return {
         title: title,
@@ -41,7 +41,7 @@ function fakeEvent(fakeOrganizer: Partial<Organizer>) {
             longitude: String(genRand(17, 22)),
             name: faker.address.city(),
         },
-        published: DEV_ENV,
+        published: true,
     };
 }
 
@@ -49,13 +49,13 @@ export async function seedDatabase() {
     const eventRepository = getRepository(Event);
 
     const organizers = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 15; i++) {
         organizers.push(fakeOrganizer());
     }
     const events = organizers
         .map(organizer => {
             const events = [];
-            for (let j = 0; j < 10; j++) {
+            for (let j = 0; j < 15; j++) {
                 events.push(fakeEvent(organizer));
             }
 
