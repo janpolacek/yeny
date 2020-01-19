@@ -18,9 +18,9 @@ async function bootstrap() {
         database: process.env.TYPEORM_DATABASE,
         port: process.env.TYPEORM_PORT,
         type: 'postgres',
-        entities: [__dirname + '/entities/**/*.ts'],
-        migrations: [__dirname + '/migrations/**/*.ts'],
-        subscribers: [__dirname + '/subscribers/**/*.ts'],
+        entities: [__dirname + '/entities/**/*.{ts,js}'],
+        migrations: [__dirname + '/migrations/**/*.{ts,js}'],
+        subscribers: [__dirname + '/subscribers/**/*.{ts,js}'],
         logging: true,
         dropSchema: true,
         synchronize: true,
@@ -28,11 +28,15 @@ async function bootstrap() {
 
     await seedDatabase();
     const schema = await TypeGraphQL.buildSchema({
-        resolvers: [__dirname + '/resolvers/**/*.ts'],
+        resolvers: [__dirname + '/resolvers/**/*.{ts,js}'],
         container: Container,
     });
 
     return await new ApolloServer({ schema, cors: true }).listen(4000);
 }
 
-bootstrap();
+try {
+    bootstrap();
+} catch (e) {
+    console.error(e);
+}
