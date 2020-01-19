@@ -3,23 +3,25 @@
     "version": "0.1.0",
     "scripts": {
         "start-dev": "ts-node-dev --respawn -T src/index.ts",
-        "start": "ts-node src/index.ts"
+        "start": "ts-node src/index.ts",
+        "build": "tsc -p ."
     },
     "dependencies": {
         "apollo-server": "^2.9.16",
         "bcryptjs": "^2.4.3",
         "class-validator": "^0.11.0",
         "date-fns": "^2.9.0",
+        "dotenv": "^8.2.0",
         "faker": "^4.1.0",
         "node-fetch": "^2.6.0",
         "pg": "^7.17.1",
         "speakingurl": "^14.0.1",
-        "ts-node": "^8.6.1",
+        "ts-node": "^8.6.2",
         "type-graphql": "^0.17.6",
         "typedi": "^0.8.0",
         "typeorm": "^0.2.22",
         "typeorm-typedi-extensions": "^0.2.3",
-        "typescript": "^3.7.4",
+        "typescript": "^3.7.5",
         "uuid": "latest"
     },
     "engines": {

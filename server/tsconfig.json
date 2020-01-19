@@ -19,6 +19,8 @@
         "resolveJsonModule": true,
         "lib": ["es2017", "esnext.asynciterable"],
         "baseUrl": ".",
+        "rootDir": "src",
+        "outDir": "build",
         "paths": {
             "*": ["types/*"]
         }
