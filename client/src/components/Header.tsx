@@ -48,7 +48,7 @@ export const Header = () => {
     const history = useHistory();
 
     const handleLogoClick = () => {
-        history.push(`/`);
+        window.location.href = '/';
     };
 
     const handleCreateEventClick = () => {

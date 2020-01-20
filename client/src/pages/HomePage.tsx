@@ -8,9 +8,9 @@ import { GetEvents, GetEventsVariables } from '../_generated/GetEvents';
 import { EventsDayCalendar } from '../components/EventsDayCalendar';
 
 export const HomePage = () => {
-    const [dateFilter, setDateFilter] = useState<Date | undefined>();
+    const [dateFilter, setDateFilter] = useState<Date | null>();
     const handleDateChange = useCallback(
-        (date: Date | undefined) => {
+        (date: Date | null) => {
             setDateFilter(date);
         },
         [setDateFilter]

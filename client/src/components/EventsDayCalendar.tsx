@@ -4,10 +4,10 @@ import { Calendar } from '../_generated/Calendar';
 import { CALENDAR } from '../_queries/Calendar';
 import { Calendar as CalendarPicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { format } from 'date-fns';
+import { format, isSameDay } from 'date-fns';
 
 type DaysMap = Record<string, boolean>;
-export const EventsDayCalendar: React.FC<{ onChange: (date: Date | undefined) => void }> = ({ onChange }) => {
+export const EventsDayCalendar: React.FC<{ onChange: (date: Date | null) => void }> = ({ onChange }) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>();
     const { loading, error, data } = useQuery<Calendar>(CALENDAR);
     const days = data?.calendar?.days ?? [];
@@ -23,13 +23,18 @@ export const EventsDayCalendar: React.FC<{ onChange: (date: Date | undefined) =>
             <CalendarPicker
                 date={selectedDate ?? new Date()}
                 onChange={date => {
-                    setSelectedDate(date);
-                    onChange(date ? date : undefined);
+                    let newDate: null | Date;
+                    if (!date || (selectedDate && isSameDay(date, selectedDate))) {
+                        newDate = null;
+                    } else {
+                        newDate = date;
+                    }
+                    setSelectedDate(newDate);
+                    onChange(newDate);
                 }}
                 renderDay={(day, _, dayInCurrentMonth, dayComponent) => {
-                    const parsedDate = day ? format(day, 'yyyy-MM-dd') : null;
-                    const isSelected = selectedDate ? parsedDate === format(selectedDate, 'yyyy-MM-dd') : false;
-                    const isDisabled = parsedDate ? !parsedDates[parsedDate] : true;
+                    const isSelected = day && selectedDate ? isSameDay(day, selectedDate) : false;
+                    const isDisabled = day ? !parsedDates[format(day, 'yyyy-MM-dd')] : true;
                     return React.cloneElement(dayComponent, {
                         selected: isSelected,
                         disabled: isDisabled,
