@@ -32,7 +32,7 @@ async function bootstrap() {
         container: Container,
     });
 
-    return await new ApolloServer({ schema, cors: true }).listen(4000);
+    return await new ApolloServer({ schema, cors: true }).listen(process.env.APP_PORT);
 }
 
 try {
