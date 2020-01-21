@@ -11,7 +11,8 @@ dotenv.config();
 TypeORM.useContainer(Container);
 
 async function bootstrap() {
-    await TypeORM.createConnection({
+    const config = {
+        ...(process.env.TYPEORM_DRIVER_EXTRA ? JSON.parse(process.env.TYPEORM_DRIVER_EXTRA) : {}),
         host: process.env.TYPEORM_HOST,
         username: process.env.TYPEORM_USERNAME,
         password: process.env.TYPEORM_PASSWORD,
@@ -22,9 +23,10 @@ async function bootstrap() {
         migrations: [__dirname + '/migrations/**/*.{ts,js}'],
         subscribers: [__dirname + '/subscribers/**/*.{ts,js}'],
         logging: true,
-        dropSchema: true,
         synchronize: true,
-    } as ConnectionOptions).then(async connection => await connection.runMigrations());
+    } as ConnectionOptions;
+
+    await TypeORM.createConnection(config).then(async connection => await connection.runMigrations());
 
     await seedDatabase();
     const schema = await TypeGraphQL.buildSchema({
