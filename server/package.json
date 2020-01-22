@@ -2,7 +2,7 @@
     "name": "yeny-server",
     "version": "0.1.0",
     "scripts": {
-        "start-dev": "ts-node-dev --respawn -T src/index.ts",
+        "start-dev": "ts-node-dev -r dotenv/config --respawn -T src/index.ts",
         "build": "tsc -p .",
         "start-prod": "node ./build/index.js"
     },

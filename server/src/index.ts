@@ -4,10 +4,8 @@ import { Container } from 'typedi';
 import * as TypeORM from 'typeorm';
 import * as TypeGraphQL from 'type-graphql';
 import { seedDatabase } from './seedDatabase';
-import dotenv from 'dotenv';
 import { ConnectionOptions } from 'typeorm';
 
-dotenv.config();
 TypeORM.useContainer(Container);
 
 async function bootstrap() {
