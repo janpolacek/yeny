@@ -4,7 +4,7 @@
     "scripts": {
         "start-dev": "ts-node-dev -r dotenv/config --respawn -T src/index.ts",
         "build": "tsc -p .",
-        "start-prod": "node ./build/index.js"
+        "start-prod": "node build/index.js"
     },
     "dependencies": {
         "apollo-server": "^2.9.16",
