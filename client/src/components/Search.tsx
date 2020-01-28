@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { FullSearch, FullSearch_fullSearch, FullSearchVariables } from '_generated/FullSearch';
 import { FULLSEARCH_EVENTS } from '_queries/Fullsearch';
@@ -95,13 +95,18 @@ export const Search = () => {
         setQuery(value.trim());
     };
 
-    const { getRootProps, getInputProps, getListboxProps, getOptionProps, groupedOptions } = useAutocomplete({
+    const { getRootProps, getInputProps, getListboxProps, getOptionProps, groupedOptions } = useAutocomplete<
+        FullSearch_fullSearch | string
+    >({
         id: 'event-search',
         options: data?.fullSearch ?? [],
         value: query,
-        onChange: (event, value: FullSearch_fullSearch) => {
+        onChange: (event: ChangeEvent<{}>, value: FullSearch_fullSearch | string | null) => {
+            if (typeof value === 'string') {
+                return;
+            }
             handleQueryChange(value?.title);
-            history.push(`/event/${value.url}`);
+            history.push(`/event/${value?.url}`);
             (event.target as HTMLInputElement).blur();
         },
         onInputChange: (event, value) => {

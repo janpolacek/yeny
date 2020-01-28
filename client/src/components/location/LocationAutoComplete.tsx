@@ -37,7 +37,7 @@ const useOsmAutoComplete = () => {
 
     const [options, setOptions] = React.useState<NominatimPlaceOptions>([]);
 
-    const onInputChange = (event: React.ChangeEvent<{}>, value: any, reason: 'input' | 'reset') => {
+    const onInputChange = (event: React.ChangeEvent<{}>, value: any) => {
         setLocation({
             name: value,
         });
@@ -103,6 +103,7 @@ export const LocationAutoComplete = () => {
                 noOptionsText={'No options'}
                 disablePortal
                 disableOpenOnFocus
+                // @ts-ignore
                 value={location.name}
                 onInputChange={onInputChange}
                 renderInput={params => <LocationDialogNameInput loading={loading} params={params} />}

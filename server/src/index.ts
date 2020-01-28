@@ -22,6 +22,7 @@ async function bootstrap() {
         subscribers: [__dirname + '/subscribers/**/*.{ts,js}'],
         logging: true,
         synchronize: true,
+        dropSchema: true,
     } as ConnectionOptions;
 
     await TypeORM.createConnection(config).then(async connection => await connection.runMigrations());
